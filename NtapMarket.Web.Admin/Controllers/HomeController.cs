@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NtapMarket.Data.IRepository;
 using NtapMarket.Web.Admin.Models;
 
 namespace NtapMarket.Web.Admin.Controllers
@@ -12,10 +13,12 @@ namespace NtapMarket.Web.Admin.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IProductModelRepository _productModelRepository { get; }
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProductModelRepository _productModelRepository)
         {
             _logger = logger;
+            this._productModelRepository = _productModelRepository;
         }
 
         public IActionResult Index()

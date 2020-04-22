@@ -11,6 +11,13 @@ namespace NtapMarket.Data.EF.Repository
 {
     public class ProductModelRepository : IProductModelRepository
     {
+        private DBContext _dBContext { get; set; }
+
+        public ProductModelRepository(string connectionString)
+        {
+            _dBContext = new DBContext(connectionString);
+        }
+
         public List<ProductModel> GetProductModel(int sellerId)
         {
             List<ProductModel> productModels = new List<ProductModel>();
@@ -63,7 +70,5 @@ namespace NtapMarket.Data.EF.Repository
         {
             
         }
-
-        private DBContext _dBContext { get; set; }
     }
 }
