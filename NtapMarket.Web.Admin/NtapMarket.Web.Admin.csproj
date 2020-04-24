@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="5.1.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NtapMarket.Data.EF\NtapMarket.Data.EF.csproj" />
   </ItemGroup>
 

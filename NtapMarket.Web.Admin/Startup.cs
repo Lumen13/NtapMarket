@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NtapMarket.Data.DBModel;
 using NtapMarket.Data.EF.Repository;
+using NtapMarket.Data.IRepository;
 
 namespace NtapMarket.Web.Admin
 {
@@ -26,8 +28,10 @@ namespace NtapMarket.Web.Admin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            var containerBuilder = AutofacModule.GetContainerBuilder(Configuration);
-            var applicationContainer = containerBuilder.Build();
+            services.AddSingleton<IProductModelRepository>(serviceProvider =>
+            {
+                return new ProductModelRepository(Configuration.GetConnectionString("NtapMarket"));
+            });
         }
 
 
