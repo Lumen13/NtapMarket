@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NtapMarket.Data.EF\NtapMarket.Data.EF.csproj" />
+    <ProjectReference Include="..\NtapMarket.Data\NtapMarket.Data.csproj" />
+  </ItemGroup>
+
+</Project>
