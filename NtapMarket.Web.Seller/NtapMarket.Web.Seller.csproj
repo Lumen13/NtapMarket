@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NtapMarket.Data.EF\NtapMarket.Data.EF.csproj" />
+    <ProjectReference Include="..\NtapMarket.Data.Mock\NtapMarket.Data.Mock.csproj" />
     <ProjectReference Include="..\NtapMarket.Data\NtapMarket.Data.csproj" />
   </ItemGroup>
 

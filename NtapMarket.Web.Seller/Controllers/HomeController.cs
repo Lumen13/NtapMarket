@@ -5,7 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NtapMarket.Data.DBModel;
 using NtapMarket.Data.IRepository;
+using NtapMarket.Data.ObjectModel;
 using NtapMarket.Web.Seller.Models;
 
 namespace NtapMarket.Web.Seller.Controllers
@@ -22,6 +24,7 @@ namespace NtapMarket.Web.Seller.Controllers
             _productModelRepository = productModelRepository;
             _logger = logger;
         }
+
 
         public IActionResult Index()
         {

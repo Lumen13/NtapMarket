@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NtapMarket.Data.EF.Repository;
 using NtapMarket.Data.IRepository;
+using NtapMarket.Data.Mock.Repository;
 
 namespace NtapMarket.Web.Seller
 {
@@ -28,7 +29,8 @@ namespace NtapMarket.Web.Seller
             services.AddControllersWithViews();
             services.AddSingleton<IProductModelRepository>(serviceProvider =>
             {
-                return new ProductModelRepository(Configuration.GetConnectionString("NtapMarket"));
+                //return new ProductModelRepository(Configuration.GetConnectionString("NtapMarket"));
+                return new MockProductRepository();
             });
         }
 

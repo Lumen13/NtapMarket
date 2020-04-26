@@ -8,13 +8,17 @@ namespace NtapMarket.Data.EF
 {
     public class DBContext : DbContext
     {
-        private DBContext(DbContextOptions<DBContext> options) : base(options) { }
+        public DBContext(string connectionString) : base(_getContextOptions(connectionString))
+        {
 
-        public DBContext(string connectionString)
+        }
+
+        private static DbContextOptions<DBContext> _getContextOptions(string connectionString)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DBContext>();
             optionsBuilder.UseSqlServer(connectionString);
-            new DBContext(optionsBuilder.Options);
+
+            return optionsBuilder.Options;
         }
 
         public DbSet<Order> Orders { get; set; }
@@ -52,11 +56,13 @@ namespace NtapMarket.Data.EF
                 builder.HasOne<Seller>()
                     .WithMany()
                     .HasForeignKey(fk => fk.SellerId)
-                    .HasPrincipalKey(pk => pk.Id);
+                    .HasPrincipalKey(pk => pk.Id)
+                    .OnDelete(DeleteBehavior.Restrict);
                 builder.HasOne<ProductCategory>()
                     .WithMany()
                     .HasForeignKey(fk => fk.ProductCategoryId)
-                    .HasPrincipalKey(pk => pk.Id);
+                    .HasPrincipalKey(pk => pk.Id)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<ProductAttribute>(builder =>
@@ -73,11 +79,13 @@ namespace NtapMarket.Data.EF
                 builder.HasOne<Product>()
                     .WithMany()
                     .HasForeignKey(fk => fk.ProductId)
-                    .HasPrincipalKey(pk => pk.Id);
+                    .HasPrincipalKey(pk => pk.Id)
+                    .OnDelete(DeleteBehavior.Restrict);
                 builder.HasOne<ProductAttribute>()
                     .WithMany()
                     .HasForeignKey(fk => fk.ProductAttributeId)
-                    .HasPrincipalKey(pk => pk.Id);
+                    .HasPrincipalKey(pk => pk.Id)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<ProductCategory>(builder =>
@@ -88,7 +96,8 @@ namespace NtapMarket.Data.EF
                 builder.HasOne<ProductCategory>()
                     .WithMany()
                     .HasForeignKey(fk => fk.ParentId).IsRequired(false)
-                    .HasPrincipalKey(pk => pk.Id);
+                    .HasPrincipalKey(pk => pk.Id)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<ProductImage>(builder =>
@@ -98,7 +107,8 @@ namespace NtapMarket.Data.EF
                 builder.HasOne<Product>()
                     .WithMany()
                     .HasForeignKey(fk => fk.ProductId)
-                    .HasPrincipalKey(pk => pk.Id);
+                    .HasPrincipalKey(pk => pk.Id)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Order>(builder =>
@@ -107,11 +117,13 @@ namespace NtapMarket.Data.EF
                 builder.HasOne<Purchaser>()
                     .WithMany()
                     .HasForeignKey(fk => fk.PurchaserId)
-                    .HasPrincipalKey(pk => pk.Id);
+                    .HasPrincipalKey(pk => pk.Id)
+                    .OnDelete(DeleteBehavior.Restrict);
                 builder.HasOne<Seller>()
                     .WithMany()
                     .HasForeignKey(fk => fk.SellerId)
-                    .HasPrincipalKey(pk => pk.Id);
+                    .HasPrincipalKey(pk => pk.Id)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<OrderElement>(builder =>
@@ -120,11 +132,13 @@ namespace NtapMarket.Data.EF
                 builder.HasOne<Order>()
                     .WithMany()
                     .HasForeignKey(fk => fk.OrderId)
-                    .HasPrincipalKey(pk => pk.Id);
+                    .HasPrincipalKey(pk => pk.Id)
+                    .OnDelete(DeleteBehavior.Restrict);
                 builder.HasOne<Product>()
                     .WithMany()
                     .HasForeignKey(fk => fk.ProductId)
-                    .HasPrincipalKey(pk => pk.Id);
+                    .HasPrincipalKey(pk => pk.Id)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }
