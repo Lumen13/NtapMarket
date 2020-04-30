@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NtapMarket.Data.DBModel;
 using NtapMarket.Data.IRepository;
+using NtapMarket.Data.Mock.Repository;
 using NtapMarket.Data.ObjectModel;
 using NtapMarket.Web.Seller.Models;
 
@@ -16,7 +17,7 @@ namespace NtapMarket.Web.Seller.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductModelRepository _productModelRepository;
-        private const int sellerId = 1;
+        Product product = new Product();
 
         public HomeController(ILogger<HomeController> logger
             , IProductModelRepository productModelRepository)
@@ -25,11 +26,17 @@ namespace NtapMarket.Web.Seller.Controllers
             _logger = logger;
         }
 
-
         public IActionResult Index()
         {
-            var productModels = _productModelRepository.GetProductModel(sellerId);
-            return View(productModels);
+            List<ProductModel> productModels = _productModelRepository.GetProductModel(product.SellerId);
+            for (int i = 0; i < productModels.Count; i++)
+            {
+                if (productModels[i].SellerId != 1)
+                {
+                    productModels.RemoveAt(i);
+                }
+            }
+            return View(productModels);            
         }
 
         public IActionResult Privacy()
