@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +34,11 @@ namespace NtapMarket.Web.Seller
                 //return new ProductModelRepository(Configuration.GetConnectionString("NtapMarket"));
                 return new MockProductRepository();
             });
+
+            services.AddControllersWithViews(mvcOtions =>
+            {
+                mvcOtions.EnableEndpointRouting = false;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,15 +57,13 @@ namespace NtapMarket.Web.Seller
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(routes =>
             {
-                endpoints.MapControllerRoute(
+                routes.MapRoute("Product", "Product/Id", new { controller = "Home", action = "Id" });
+
+                routes.MapRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

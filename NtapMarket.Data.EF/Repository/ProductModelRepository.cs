@@ -18,7 +18,7 @@ namespace NtapMarket.Data.EF.Repository
             _dBContext = new DBContext(connectionString);
         }
 
-        public List<ProductModel> GetProductModel(int sellerId)
+        public List<ProductModel> GetProductModel(int sellerId, int id)
         {
             List<ProductModel> productModels = new List<ProductModel>();
             var products = _dBContext.Products.Where(x => x.SellerId == sellerId).ToList();

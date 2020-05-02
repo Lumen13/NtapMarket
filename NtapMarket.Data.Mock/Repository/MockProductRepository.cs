@@ -9,7 +9,7 @@ namespace NtapMarket.Data.Mock.Repository
 {
     public class MockProductRepository : IProductModelRepository
     {
-        public List<ProductModel> GetProductModel(int sellerId)
+        public List<ProductModel> GetProductModel(int sellerId, int id)
         {
             var productModels = new List<ProductModel>()
             {

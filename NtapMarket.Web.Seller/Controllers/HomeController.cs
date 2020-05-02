@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -28,8 +29,9 @@ namespace NtapMarket.Web.Seller.Controllers
 
         public IActionResult Index()
         {
-            List<ProductModel> productModels = _productModelRepository.GetProductModel(product.SellerId);
-            for (int i = 0; i < productModels.Count; i++)
+            List<ProductModel> productModels = _productModelRepository.GetProductModel(product.SellerId, product.Id);
+
+            for (int i = productModels.Count - 1; i >= 0; i--)
             {
                 if (productModels[i].SellerId != 1)
                 {
@@ -37,6 +39,20 @@ namespace NtapMarket.Web.Seller.Controllers
                 }
             }
             return View(productModels);            
+        }
+
+        [Route("Product/{Id:int}")]
+        public IActionResult Id()
+        {
+            List<ProductModel> productModels = _productModelRepository.GetProductModel(product.SellerId, product.Id);
+            for (int i = productModels.Count - 1; i >= 0; i--)
+            {
+                if (productModels[i].Id != product.Id)
+                {
+                    productModels.RemoveAt(i);
+                }
+            }
+            return View(productModels);
         }
 
         public IActionResult Privacy()
