@@ -8,7 +8,10 @@ namespace NtapMarket.Data.IRepository
 {
     public interface IProductModelRepository
     {
-        List<ProductModel> GetProductModel(int sellerId, int id);
+        List<ProductModel> GetProductModels(int sellerId);
+
+        ProductModel GetProductModel(int Id);
+
         void PushProductModel(ProductModel productModel);
     }
 }

@@ -18,7 +18,7 @@ namespace NtapMarket.Web.Seller.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductModelRepository _productModelRepository;
-        Product product = new Product();
+        private readonly int SellerId = 1;
 
         public HomeController(ILogger<HomeController> logger
             , IProductModelRepository productModelRepository)
@@ -29,30 +29,22 @@ namespace NtapMarket.Web.Seller.Controllers
 
         public IActionResult Index()
         {
-            List<ProductModel> productModels = _productModelRepository.GetProductModel(product.SellerId, product.Id);
+            List<ProductModel> productModels = _productModelRepository.GetProductModels(SellerId);
 
-            for (int i = productModels.Count - 1; i >= 0; i--)
-            {
-                if (productModels[i].SellerId != 1)
-                {
-                    productModels.RemoveAt(i);
-                }
-            }
             return View(productModels);            
         }
 
-        [Route("Product/{Id:int}")]
-        public IActionResult Id()
+        [Route("Product/{Id}")]
+        public IActionResult Product(int id)
         {
-            List<ProductModel> productModels = _productModelRepository.GetProductModel(product.SellerId, product.Id);
-            for (int i = productModels.Count - 1; i >= 0; i--)
+            ProductModel productModel = _productModelRepository.GetProductModel(id);
+
+            if (productModel == null)
             {
-                if (productModels[i].Id != product.Id)
-                {
-                    productModels.RemoveAt(i);
-                }
+                return NotFound();                      // null-page check
             }
-            return View(productModels);
+            
+            return View(productModel);
         }
 
         public IActionResult Privacy()
