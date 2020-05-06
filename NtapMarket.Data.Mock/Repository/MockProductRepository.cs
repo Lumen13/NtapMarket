@@ -19,16 +19,16 @@ namespace NtapMarket.Data.Mock.Repository
                 ProductCategoryId = 1,
                 SellerId = 1,
                 Count = 1,
-                MarketingInfo = "очень интересная вещь. правда правда",
-                Name = "газонокосилка 3000",
+                MarketingInfo = "Очень интересная вещь. правда правда",
+                Name = "Газонокосилка 3000",
                 Price = 30000,
 
                 ProductCategory = new ProductCategory()
                 {
                     Id = 1,
                     ParentId = null,
-                    Name = "газонокосилки",
-                    Description = "газонокосилками газонокосилят траву"
+                    Name = "Газонокосилки",
+                    Description = "Газонокосилками газонокосилят траву"
                 },
 
                 Seller = new Seller()
@@ -46,8 +46,8 @@ namespace NtapMarket.Data.Mock.Repository
                 SellerId = 2,
                 ProductCategoryId = 2,
                 Count = 2,
-                MarketingInfo = "тоже интересная вещь. но не очень",
-                Name = "ледяная скорбь",
+                MarketingInfo = "Тоже интересная вещь. но не очень",
+                Name = "Ледяная скорбь",
                 Price = 40000,
 
                 ProductCategory = new ProductCategory()
@@ -55,7 +55,7 @@ namespace NtapMarket.Data.Mock.Repository
                     Id = 2,
                     ParentId = null,
                     Name = "WoW",
-                    Description = "предметы по WoW"
+                    Description = "Предметы из вселенной WoW"
                 },
 
                 Seller = new Seller()
@@ -73,9 +73,25 @@ namespace NtapMarket.Data.Mock.Repository
                 SellerId = 1,
                 ProductCategoryId = 1,
                 Count = 1,
-                MarketingInfo = "невероятно бесполезная штука",
-                Name = "урал 880",
-                Price = 46500
+                MarketingInfo = "Невероятно бесполезная штука",
+                Name = "Урал 880",
+                Price = 46500,
+
+                ProductCategory = new ProductCategory()
+                {
+                    Id = 1,
+                    ParentId = null,
+                    Name = "Газонокосилки",
+                    Description = "Газонокосилками газонокосилят траву"
+                },
+
+                Seller = new Seller()
+                {
+                    Id = 2,
+                    Name = "Ванька",
+                    Email = "sosiska@mail.ru",
+                    Phone = "88002220021"
+                }
             }
         };
 

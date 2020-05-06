@@ -3,9 +3,32 @@
 <h1>Товары</h1>
 <h4><br>Id продавца: 1</h4>
 
-@{
-    foreach (NtapMarket.Data.DBModel.Product item in Model)
-    {
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Кол-во</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Категория</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (NtapMarket.Data.ObjectModel.ProductModel item in Model)
+        {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <td><a href="https://localhost:44392/Product/@item.Id" style="color: white">@item.Name</a></td>
+                <td><a href="https://localhost:44392/Product/@item.Id" style="color: white">@item.Count шт.</a></td>
+                <td><a href="https://localhost:44392/Product/@item.Id" style="color: white">@item.Price руб.</a></td>
+                <td><a href="https://localhost:44392/Product/@item.Id" style="color: white">@item.ProductCategory.Name</a></td>
+            </tr>
+        }
+     </tbody>
+</table>
+
+
+    @*{
         <hr>
         <p>
             <details>
@@ -16,6 +39,6 @@
                 <br><br><a href="https://localhost:44392/Product/@item.Id">Подробнее</a>
             </details>
         </p>
-    }
-}
+    }*@
+
 
