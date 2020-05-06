@@ -37,6 +37,76 @@ namespace NtapMarket.Data.Mock.Repository
                     Name = "Борис",
                     Email = "kolbaska@mail.ru",
                     Phone = "88002220022"
+                },
+
+                ProductAttributeModel = new List<ProductAttributeModel>()
+                {
+                    new ProductAttributeModel()
+                    {
+                        ProductAttributeId = 1,
+                        ProductAttributeValueId = 1,
+                        Name = "Тип питания",
+                        Value = "Бензиновая",
+                        Description = "Газонокосилки бензиновые являются самым распространённым типом косилок. " +
+                        "Двигатель внутреннего сгорания обеспечивает газонокосилку высокой мощностью, " +
+                        "что позволяет использовать их на больших территориях. " +
+                        "Основным преимуществом бензиновых газонокосилок является высокая мобильность, " +
+                        "другими словами, при работе с такой косилкой нет никаких ограничений в виде кабеля, " +
+                        "ограничивающего свободу перемещения косилки. " +
+                        "Недостатками бензиновых газонокосилок являются высокий вес, " +
+                        "шум при работе и низкая экологичность."
+                    },
+
+                    new ProductAttributeModel()
+                    {
+                        ProductAttributeId = 2,
+                        ProductAttributeValueId = 2,
+                        Name = "Травосборник",
+                        Value = "Жесткий - 40л",
+                        Description = ""
+                    },
+
+                    new ProductAttributeModel()
+                    {
+                        ProductAttributeId = 4,
+                        ProductAttributeValueId = 4,
+                        Name = "Материал корпуса",
+                        Value = "Экопластик",
+                        Description = ""
+                    },
+
+                    new ProductAttributeModel()
+                    {
+                        ProductAttributeId = 3,
+                        ProductAttributeValueId = 3,
+                        Name = "Вес",
+                        Value = "12 кг",
+                        Description = ""
+                    }                    
+                },
+
+                ProductImage = new List<ProductImage>()
+                {
+                    new ProductImage()
+                    {
+                        Id = 1,
+                        ProductId = 1,
+                        ImageURL = "https://thumb.cloud.mail.ru/weblink/thumb/xw1/cCAz/35U7kkU5m/1.jpg?x-email=ntap.ru%40mail.ru"
+                    },
+
+                    new ProductImage()
+                    {
+                        Id = 2,
+                        ProductId = 1,
+                        ImageURL = "https://thumb.cloud.mail.ru/weblink/thumb/xw1/2QaK/2y2xF69BZ/11.jpg?x-email=ntap.ru%40mail.ru"
+                    },
+
+                    new ProductImage()
+                    {
+                        Id = 3,
+                        ProductId = 1,
+                        ImageURL = "https://thumb.cloud.mail.ru/weblink/thumb/xw1/4e6W/2BPnQF4ke/111.jpg?x-email=ntap.ru%40mail.ru"
+                    }
                 }
             },
 
