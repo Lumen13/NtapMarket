@@ -70,10 +70,15 @@ namespace NtapMarket.Data.EF.Repository
         {
             return null;
         }
-        
+
+        public ProductModel SetProductModel()
+        {
+            return null;
+        }
+
         public void PushProductModel(ProductModel productModel)
         {
-            
+
         }
     }
 }

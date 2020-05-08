@@ -12,6 +12,8 @@ namespace NtapMarket.Data.IRepository
 
         ProductModel GetProductModel(int Id);
 
+        //ProductModel SetProductModel();
+
         void PushProductModel(ProductModel productModel);
     }
 }

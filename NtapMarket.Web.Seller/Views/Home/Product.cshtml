@@ -3,10 +3,26 @@
 <h1>Информация о товаре</h1>
 
 <hr>
-<p>
-    <strong>@Model.Name</strong>
-    <br><br>О Категории:
-    <br>@Model.ProductCategory.Description
-    <br><br>О продукте:
-    <br>@Model.MarketingInfo
-</p>
+<ul class="list-unstyled">
+    <li><h3>@Model.Name</h3>
+    <li><br><h5>О Категории:</h5>
+    <ul>
+        @Model.ProductCategory.Description
+    </ul>
+    <li><br><h5>О продукте:</h5>
+        <ul><li>@Model.MarketingInfo</li></ul>
+        <br>
+        @foreach (var item in Model.ProductAttributeModel)
+        {
+            <ul><li>@item.Name - @item.Value</li></ul>
+        }  
+    </li>
+    <li>
+        <br>
+        @foreach (var item in Model.ProductImage)
+        {
+            <img src="@item.ImageURL" class="img-fluid" alt="Responsive image">
+        }
+    </li>
+    
+</ul>

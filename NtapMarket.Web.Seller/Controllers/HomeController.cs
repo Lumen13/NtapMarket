@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 using Microsoft.Extensions.Logging;
 using NtapMarket.Data.DBModel;
 using NtapMarket.Data.IRepository;
@@ -19,6 +21,8 @@ namespace NtapMarket.Web.Seller.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IProductModelRepository _productModelRepository;
         private readonly int SellerId = 1;
+
+        public string PublicInfo { get; set; }
 
         public HomeController(ILogger<HomeController> logger
             , IProductModelRepository productModelRepository)
@@ -46,6 +50,19 @@ namespace NtapMarket.Web.Seller.Controllers
             
             return View(productModel);
         }
+
+        //[HttpGet]
+        //public IActionResult AddProduct()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public IActionResult AddProduct(string info)
+        //{
+        //    PublicInfo = info;
+        //    return View(info, PublicInfo);
+        //}
 
         public IActionResult Privacy()
         {
