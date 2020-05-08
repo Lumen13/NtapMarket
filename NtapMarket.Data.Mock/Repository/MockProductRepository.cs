@@ -414,9 +414,19 @@ namespace NtapMarket.Data.Mock.Repository
             
         }
 
-        public ProductModel SetProductModel()
+        public ProductModel SetProductModel(string name)
         {
             var productModel = new ProductModel();
+
+            for (int i = _productModels.Count - 1; i < _productModels.Count; i++)
+            {
+                productModel.Id = _productModels[i].Id + 1;
+            }
+
+            productModel.Name = name;
+            productModel.Count = 1;
+            productModel.Price = 10000;
+            //productModel.ProductCategory.Name = "Газонокосилки";
 
             _productModels.Add(productModel);
 

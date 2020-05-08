@@ -71,7 +71,7 @@ namespace NtapMarket.Data.EF.Repository
             return null;
         }
 
-        public ProductModel SetProductModel()
+        public ProductModel SetProductModel(string name)
         {
             return null;
         }

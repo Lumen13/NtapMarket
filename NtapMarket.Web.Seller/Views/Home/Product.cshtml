@@ -5,17 +5,19 @@
 <hr>
 <ul class="list-unstyled">
     <li><h3>@Model.Name</h3>
-    <li><br><h5>О Категории:</h5>
-    <ul>
-        @Model.ProductCategory.Description
-    </ul>
-    <li><br><h5>О продукте:</h5>
+    <li>
+        <br><h5>О Категории:</h5>
+        <ul>
+            @Model.ProductCategory.Description
+        </ul>
+    <li>
+        <br><h5>О продукте:</h5>
         <ul><li>@Model.MarketingInfo</li></ul>
         <br>
         @foreach (var item in Model.ProductAttributeModel)
         {
             <ul><li>@item.Name - @item.Value</li></ul>
-        }  
+        }
     </li>
     <li>
         <br>
@@ -24,5 +26,5 @@
             <img src="@item.ImageURL" class="img-fluid" alt="Responsive image">
         }
     </li>
-    
+
 </ul>
