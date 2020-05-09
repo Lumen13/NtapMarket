@@ -420,11 +420,16 @@ namespace NtapMarket.Data.Mock.Repository
             decimal price, 
             string marketingInfo,
             string productCategoryName,
-            string productCategoryDescription)
+            string productCategoryDescription,
+            string productAttributeModelName,
+            string productAttributeModelValue,
+            string productAttributeModelDescription)
         {
             var productModel = new ProductModel()
             {
                 Id = _productModels.Count + 1,
+                ProductCategoryId = 0,
+                SellerId = 0,
                 Name = name,
                 Count = count,
                 Price = price,
@@ -432,6 +437,7 @@ namespace NtapMarket.Data.Mock.Repository
 
                 ProductCategory = new ProductCategory()
                 {
+                    Id = 0,
                     Name = productCategoryName,
                     ParentId = 0,
                     Description = productCategoryDescription
@@ -449,7 +455,7 @@ namespace NtapMarket.Data.Mock.Repository
                 {
                     new ProductAttributeModel()
                     {
-                        ProductAttributeId = 1,
+                        ProductAttributeId = 0,
                         ProductAttributeValueId = 0,
                         Name = "Тип питания",
                         Value = "Бензиновая",
@@ -470,7 +476,7 @@ namespace NtapMarket.Data.Mock.Repository
                     {
                         Id = 0,
                         ProductId = 0,
-                        ImageURL = "https://thumb.cloud.mail.ru/weblink/thumb/xw1/cCAz/35U7kkU5m/1.jpg?x-email=ntap.ru%40mail.ru"
+                        ImageURL = "https://thumb.cloud.mail.ru/thumb/xw1/Upload/NtapMarket/z.jpg?x-email=ntap.ru%40mail.ru"
                     }
                 }
             };
@@ -478,6 +484,9 @@ namespace NtapMarket.Data.Mock.Repository
             for (int i = _productModels.Count - 1; i < _productModels.Count; i++)
             {
                 productModel.ProductCategory.Id = _productModels[i].ProductCategory.Id + 1;
+                productModel.ProductCategoryId = _productModels[i].ProductCategoryId + 1;
+                productModel.SellerId = _productModels[i].SellerId;
+                // Assign CategoryId, Category.Id and SellerId from the general ModelList to the new User's Model and adds one
             }
 
             for (int _LastModelNum = _productModels.Count - 1; _LastModelNum < _productModels.Count; _LastModelNum++)
@@ -487,9 +496,16 @@ namespace NtapMarket.Data.Mock.Repository
                     for (int _LastAttributeNum = _productModels[_LastModelNum].ProductAttributeModel.Count - 1; _LastAttributeNum < _productModels[_LastModelNum].ProductAttributeModel.Count; _LastAttributeNum++)
                     {
                         productModel.ProductAttributeModel[LastAttributeNum].ProductAttributeValueId =
-                            _productModels[_LastModelNum].ProductAttributeModel[_LastAttributeNum].ProductAttributeValueId;
-                        // Assign AttributeValueId from the general ModelList to the new User's Model and adds one
+                            _productModels[_LastModelNum].ProductAttributeModel[_LastAttributeNum].ProductAttributeValueId + 1;
+
+                        _productModels[_LastModelNum].ProductAttributeModel[_LastAttributeNum].ProductAttributeId
+                            = productModel.ProductAttributeModel[LastAttributeNum].ProductAttributeId + 1;
+                        // Assign AttributeValueId and AttributeId from the general ModelList to the new User's Model and adds one
                     }
+
+                    productModel.ProductAttributeModel[LastAttributeNum].Name = productAttributeModelName;
+                    productModel.ProductAttributeModel[LastAttributeNum].Value = productAttributeModelValue;
+                    productModel.ProductAttributeModel[LastAttributeNum].Description = productAttributeModelDescription;
                 }
             }
 
@@ -500,12 +516,12 @@ namespace NtapMarket.Data.Mock.Repository
                     for (int _LastImageNum = _productModels[_LastModelNum].ProductImage.Count - 1; _LastImageNum < _productModels[_LastModelNum].ProductImage.Count; _LastImageNum++)
                     {
                         productModel.ProductImage[LastImageNum].Id =
-                            _productModels[_LastModelNum].ProductImage[_LastImageNum].Id;
+                            _productModels[_LastModelNum].ProductImage[_LastImageNum].Id + 1;
                         // Assign ImageId from the general ModelList to the new User's Image and adds one
                     }
 
                     productModel.ProductImage[LastImageNum].ProductId = productModel.Id;
-                    // Assign new User's ProductId to the new User's Image ProductId
+                    // Assign new User's Id to the new User's Image Id
                 }
             }            
 

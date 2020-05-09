@@ -77,7 +77,10 @@ namespace NtapMarket.Data.EF.Repository
             decimal price,
             string marketingInfo,
             string productCategoryName,
-            string productCategoryDescription)
+            string productCategoryDescription,
+            string productAttributeModelName,
+            string productAttributeModelValue,
+            string productAttributeModelDescription)
         {
             return null;
         }

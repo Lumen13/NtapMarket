@@ -63,7 +63,10 @@ namespace NtapMarket.Web.Seller.Controllers
             decimal price, 
             string marketingInfo,
             string productCategoryName,
-            string productCategoryDescription)
+            string productCategoryDescription,
+            string productAttributeModelName,
+            string productAttributeModelValue,
+            string productAttributeModelDescription)
         {
             _productModelRepository.SetProductModel
                 (name,
@@ -71,7 +74,10 @@ namespace NtapMarket.Web.Seller.Controllers
                 price, 
                 marketingInfo,
                 productCategoryName,
-                productCategoryDescription);
+                productCategoryDescription,
+                productAttributeModelName,
+                productAttributeModelValue,
+                productAttributeModelDescription);
 
             return new LocalRedirectResult($"~/Home/Index/");
         }

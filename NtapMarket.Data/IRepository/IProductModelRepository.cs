@@ -18,7 +18,10 @@ namespace NtapMarket.Data.IRepository
             decimal price, 
             string marketingInfo,
             string productCategoryName,
-            string productCategoryDescription);
+            string productCategoryDescription,
+            string productAttributeModelName,
+            string productAttributeModelValue,
+            string productAttributeModelDescription);
 
         void PushProductModel(ProductModel productModel);
     }
