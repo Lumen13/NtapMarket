@@ -414,19 +414,102 @@ namespace NtapMarket.Data.Mock.Repository
             
         }
 
-        public ProductModel SetProductModel(string name)
+        public ProductModel SetProductModel
+            (string name, 
+            int count, 
+            decimal price, 
+            string marketingInfo,
+            string productCategoryName,
+            string productCategoryDescription)
         {
-            var productModel = new ProductModel();
+            var productModel = new ProductModel()
+            {
+                Id = _productModels.Count + 1,
+                Name = name,
+                Count = count,
+                Price = price,
+                MarketingInfo = marketingInfo,
+
+                ProductCategory = new ProductCategory()
+                {
+                    Name = productCategoryName,
+                    ParentId = 0,
+                    Description = productCategoryDescription
+                },
+
+                Seller = new Seller()
+                {
+                    Id = 1,
+                    Name = "Борис",
+                    Email = "kolbaska@mail.ru",
+                    Phone = "88002220022"
+                },
+
+                ProductAttributeModel = new List<ProductAttributeModel>()
+                {
+                    new ProductAttributeModel()
+                    {
+                        ProductAttributeId = 1,
+                        ProductAttributeValueId = 0,
+                        Name = "Тип питания",
+                        Value = "Бензиновая",
+                        Description = "Газонокосилки бензиновые являются самым распространённым типом косилок. " +
+                        "Двигатель внутреннего сгорания обеспечивает газонокосилку высокой мощностью, " +
+                        "что позволяет использовать их на больших территориях. " +
+                        "Основным преимуществом бензиновых газонокосилок является высокая мобильность, " +
+                        "другими словами, при работе с такой косилкой нет никаких ограничений в виде кабеля, " +
+                        "ограничивающего свободу перемещения косилки. " +
+                        "Недостатками бензиновых газонокосилок являются высокий вес, " +
+                        "шум при работе и низкая экологичность."
+                    }
+                },
+
+                ProductImage = new List<ProductImage>()
+                {
+                    new ProductImage()
+                    {
+                        Id = 0,
+                        ProductId = 0,
+                        ImageURL = "https://thumb.cloud.mail.ru/weblink/thumb/xw1/cCAz/35U7kkU5m/1.jpg?x-email=ntap.ru%40mail.ru"
+                    }
+                }
+            };
 
             for (int i = _productModels.Count - 1; i < _productModels.Count; i++)
             {
-                productModel.Id = _productModels[i].Id + 1;
+                productModel.ProductCategory.Id = _productModels[i].ProductCategory.Id + 1;
             }
 
-            productModel.Name = name;
-            productModel.Count = 1;
-            productModel.Price = 10000;
-            //productModel.ProductCategory.Name = "Газонокосилки";
+            for (int _LastModelNum = _productModels.Count - 1; _LastModelNum < _productModels.Count; _LastModelNum++)
+            {
+                for (int LastAttributeNum = productModel.ProductAttributeModel.Count - 1; LastAttributeNum < productModel.ProductAttributeModel.Count; LastAttributeNum++)
+                {
+                    for (int _LastAttributeNum = _productModels[_LastModelNum].ProductAttributeModel.Count - 1; _LastAttributeNum < _productModels[_LastModelNum].ProductAttributeModel.Count; _LastAttributeNum++)
+                    {
+                        productModel.ProductAttributeModel[LastAttributeNum].ProductAttributeValueId =
+                            _productModels[_LastModelNum].ProductAttributeModel[_LastAttributeNum].ProductAttributeValueId;
+                        // Assign AttributeValueId from the general ModelList to the new User's Model and adds one
+                    }
+                }
+            }
+
+            for (int _LastModelNum = _productModels.Count - 1; _LastModelNum < _productModels.Count; _LastModelNum++)
+            {
+                for (int LastImageNum = productModel.ProductImage.Count - 1; LastImageNum < productModel.ProductImage.Count; LastImageNum++)
+                {
+                    for (int _LastImageNum = _productModels[_LastModelNum].ProductImage.Count - 1; _LastImageNum < _productModels[_LastModelNum].ProductImage.Count; _LastImageNum++)
+                    {
+                        productModel.ProductImage[LastImageNum].Id =
+                            _productModels[_LastModelNum].ProductImage[_LastImageNum].Id;
+                        // Assign ImageId from the general ModelList to the new User's Image and adds one
+                    }
+
+                    productModel.ProductImage[LastImageNum].ProductId = productModel.Id;
+                    // Assign new User's ProductId to the new User's Image ProductId
+                }
+            }            
+
+
 
             _productModels.Add(productModel);
 

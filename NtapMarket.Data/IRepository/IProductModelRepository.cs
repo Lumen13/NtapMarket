@@ -12,7 +12,13 @@ namespace NtapMarket.Data.IRepository
 
         ProductModel GetProductModel(int Id);
 
-        ProductModel SetProductModel(string name);
+        ProductModel SetProductModel
+            (string name,
+            int count, 
+            decimal price, 
+            string marketingInfo,
+            string productCategoryName,
+            string productCategoryDescription);
 
         void PushProductModel(ProductModel productModel);
     }

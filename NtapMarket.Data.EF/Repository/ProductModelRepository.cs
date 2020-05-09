@@ -71,7 +71,13 @@ namespace NtapMarket.Data.EF.Repository
             return null;
         }
 
-        public ProductModel SetProductModel(string name)
+        public ProductModel SetProductModel
+            (string name,
+            int count, 
+            decimal price,
+            string marketingInfo,
+            string productCategoryName,
+            string productCategoryDescription)
         {
             return null;
         }

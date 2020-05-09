@@ -57,10 +57,23 @@ namespace NtapMarket.Web.Seller.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProduct(string name)
+        public IActionResult AddProduct
+            (string name, 
+            int count, 
+            decimal price, 
+            string marketingInfo,
+            string productCategoryName,
+            string productCategoryDescription)
         {
-            _productModelRepository.SetProductModel(name);
-            return View();
+            _productModelRepository.SetProductModel
+                (name,
+                count,
+                price, 
+                marketingInfo,
+                productCategoryName,
+                productCategoryDescription);
+
+            return new LocalRedirectResult($"~/Home/Index/");
         }
 
         public IActionResult Privacy()

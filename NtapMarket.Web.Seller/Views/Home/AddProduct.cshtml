@@ -4,8 +4,19 @@
     ViewData["Title"] = "AddProduct";
 }
 
-<form method="post">
-    <label>Имя товара:</label><br />
-    <input type="text" name="name" /><br /><br />
-    <input type="submit" value="Отправить" />
-</form>
+    <form method="post">
+        <label>Имя товара:</label><br />
+        <input type="text" name="name" /><br /><br />
+        <label>Количество едениц товара (штук):</label><br />
+        <input type="text" name="count" /><br /><br />
+        <label>Цена товара:</label><br />
+        <input type="text" name="price" /><br /><br />
+        <label>Полное описание товара:</label><br />
+        <input type="text" name="marketingInfo" /><br /><br />
+        <hr>
+        <label>Название новой категории:</label><br />
+        <input type="text" name="productCategoryName" /><br /><br />
+        <label>Полное описание категории:</label><br />
+        <input type="text" name="productCategoryDescription" /><br /><br />
+        <input type="submit" value="Отправить" />
+    </form>
