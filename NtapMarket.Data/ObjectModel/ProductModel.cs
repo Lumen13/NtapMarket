@@ -11,5 +11,6 @@ namespace NtapMarket.Data.ObjectModel
         public List<ProductAttributeModel> ProductAttributeModel = new List<ProductAttributeModel>();
         public Seller Seller { get; set; }
         public ProductCategory ProductCategory { get; set; }
+        public UserImageModel UserImageModel { get; set; }
     }
 }

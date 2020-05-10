@@ -3,11 +3,13 @@ using NtapMarket.Data.DBModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NtapMarket.Data.ObjectModel;
 
 namespace NtapMarket.Data.EF
 {
     public class DBContext : DbContext
     {
+
         public DBContext(string connectionString) : base(_getContextOptions(connectionString))
         {
 

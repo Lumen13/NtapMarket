@@ -59,7 +59,7 @@ namespace NtapMarket.Web.Seller
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("Product", "Product/Id", new { controller = "Home", action = "Id" });
+                //routes.MapRoute("Product", "Product/Id", new { controller = "Home", action = "Id" });
 
                 routes.MapRoute(
                     name: "default",

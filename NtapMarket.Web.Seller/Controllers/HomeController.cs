@@ -2,12 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 using Microsoft.Extensions.Logging;
 using NtapMarket.Data.DBModel;
+using NtapMarket.Data.EF;
 using NtapMarket.Data.IRepository;
 using NtapMarket.Data.Mock.Repository;
 using NtapMarket.Data.ObjectModel;
@@ -20,14 +24,17 @@ namespace NtapMarket.Web.Seller.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IProductModelRepository _productModelRepository;
         private readonly int SellerId = 1;
+        IWebHostEnvironment _appEnvironment;                                //      Added
 
         public string PublicInfo { get; set; }
 
         public HomeController(ILogger<HomeController> logger
-            , IProductModelRepository productModelRepository)
+            , IProductModelRepository productModelRepository
+            , IWebHostEnvironment appEnvironment)                           //      Received
         {
             _productModelRepository = productModelRepository;
             _logger = logger;
+            _appEnvironment = appEnvironment;                               //      Initialized to make work DataContext
         }
 
         public IActionResult Index()
@@ -44,7 +51,7 @@ namespace NtapMarket.Web.Seller.Controllers
 
             if (productModel == null)
             {
-                return NotFound();                      // null-page check
+                return NotFound();                                                  // null-page check
             }
             
             return View(productModel);
@@ -57,27 +64,38 @@ namespace NtapMarket.Web.Seller.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProduct
+        public async Task<IActionResult> AddProduct                                // makes method async
             (string name, 
             int count, 
             decimal price, 
             string marketingInfo,
-            string productCategoryName,
-            string productCategoryDescription,
-            string productAttributeModelName,
-            string productAttributeModelValue,
-            string productAttributeModelDescription)
+            string CategoryName,
+            string CategoryDescription,
+            string AttributeModelName,
+            string AttributeModelValue,
+            string AttributeModelDescription,
+            IFormFile uploadedFile)                                                     // added Http.Features Component in the Interface!
         {
             _productModelRepository.SetProductModel
                 (name,
                 count,
                 price, 
                 marketingInfo,
-                productCategoryName,
-                productCategoryDescription,
-                productAttributeModelName,
-                productAttributeModelValue,
-                productAttributeModelDescription);
+                CategoryName,
+                CategoryDescription,
+                AttributeModelName,
+                AttributeModelValue,
+                AttributeModelDescription,
+                uploadedFile);
+
+            if (uploadedFile != null)
+            {
+                string path = "/Files/" + uploadedFile.FileName;
+                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);                         // async 
+                }
+            }
 
             return new LocalRedirectResult($"~/Home/Index/");
         }

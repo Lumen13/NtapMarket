@@ -1,4 +1,5 @@
-﻿using NtapMarket.Data.DBModel;
+﻿using Microsoft.AspNetCore.Http;
+using NtapMarket.Data.DBModel;
 using NtapMarket.Data.IRepository;
 using NtapMarket.Data.ObjectModel;
 using System;
@@ -76,11 +77,12 @@ namespace NtapMarket.Data.EF.Repository
             int count, 
             decimal price,
             string marketingInfo,
-            string productCategoryName,
-            string productCategoryDescription,
-            string productAttributeModelName,
-            string productAttributeModelValue,
-            string productAttributeModelDescription)
+            string CategoryName,
+            string CategoryDescription,
+            string AttributeModelName,
+            string AttributeModelValue,
+            string AttributeModelDescription,
+            IFormFile uploadedFile)
         {
             return null;
         }

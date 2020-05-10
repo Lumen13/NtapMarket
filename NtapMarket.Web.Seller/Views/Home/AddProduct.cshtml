@@ -1,29 +1,32 @@
-﻿@model NtapMarket.Web.Seller.Controllers.HomeController
-
-@{
+﻿@{
     ViewData["Title"] = "AddProduct";
 }
 
-<form method="post">
-    <label>Имя товара:</label><br />
-    <input type="text" name="name" /><br /><br />
-    <label>Количество единиц товара (штук):</label><br />
-    <input type="text" name="count" /><br /><br />
-    <label>Цена товара:</label><br />
-    <input type="text" name="price" /><br /><br />
-    <label>Полное описание товара:</label><br />
-    <input type="text" name="marketingInfo" /><br /><br />
-    <hr>
-    <label>Название новой категории:</label><br />
-    <input type="text" name="productCategoryName" /><br /><br />
-    <label>Полное описание категории:</label><br />
-    <input type="text" name="productCategoryDescription" /><br /><br />
-    <hr>
-    <label>Название нового атрибута:</label><br />
-    <input type="text" name="productAttributeModelName" /><br /><br />
-    <label>Значение атрибута:</label><br />
-    <input type="text" name="productAttributeModelValue" /><br /><br />
-    <label>Полное описание атрибута:</label><br />
-    <input type="text" name="productAttributeModelDescription" /><br /><br />
-    <input type="submit" value="Отправить" />
+<form asp-action="AddProduct" asp-controller="Home" method="Post" enctype="multipart/form-data">
+    <div method="post">
+        <label>Имя товара:</label><br />
+        <input type="text" name="name" /><br /><br />
+        <label>Количество единиц товара (штук):</label><br />
+        <input type="text" name="count" /><br /><br />
+        <label>Цена товара:</label><br />
+        <input type="text" name="price" /><br /><br />
+        <label>Полное описание товара:</label><br />
+        <input type="text" name="marketingInfo" /><br /><br />
+        <hr>
+        <label>Название новой категории:</label><br />
+        <input type="text" name="CategoryName" /><br /><br />
+        <label>Полное описание категории:</label><br />
+        <input type="text" name="CategoryDescription" /><br /><br />
+        <hr>
+        <label>Название нового атрибута:</label><br />
+        <input type="text" name="AttributeModelName" /><br /><br />
+        <label>Значение атрибута:</label><br />
+        <input type="text" name="AttributeModelValue" /><br /><br />
+        <label>Полное описание атрибута:</label><br />
+        <input type="text" name="AttributeModelDescription" /><br /><br />
+        <hr>
+        <label>Загрузите изображения:</label><br>
+        <input type="file" name="uploadedFile" /><br><br>
+        <input type="submit" value="Отправить" />
+    </div>
 </form>

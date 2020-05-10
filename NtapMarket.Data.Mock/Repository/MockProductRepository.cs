@@ -1,4 +1,5 @@
-﻿using NtapMarket.Data.DBModel;
+﻿using Microsoft.AspNetCore.Http;
+using NtapMarket.Data.DBModel;
 using NtapMarket.Data.IRepository;
 using NtapMarket.Data.ObjectModel;
 using System;
@@ -419,12 +420,16 @@ namespace NtapMarket.Data.Mock.Repository
             int count, 
             decimal price, 
             string marketingInfo,
-            string productCategoryName,
-            string productCategoryDescription,
-            string productAttributeModelName,
-            string productAttributeModelValue,
-            string productAttributeModelDescription)
+            string CategoryName,
+            string CategoryDescription,
+            string AttributeModelName,
+            string AttributeModelValue,
+            string AttributeModelDescription,
+            IFormFile uploadedFile)
         {
+            string path = "/Files/" + uploadedFile.FileName;
+            UserImageModel userImage = new UserImageModel { Name = uploadedFile.FileName, Path = path };
+
             var productModel = new ProductModel()
             {
                 Id = _productModels.Count + 1,
@@ -438,9 +443,9 @@ namespace NtapMarket.Data.Mock.Repository
                 ProductCategory = new ProductCategory()
                 {
                     Id = 0,
-                    Name = productCategoryName,
+                    Name = CategoryName,
                     ParentId = 0,
-                    Description = productCategoryDescription
+                    Description = CategoryDescription
                 },
 
                 Seller = new Seller()
@@ -476,7 +481,7 @@ namespace NtapMarket.Data.Mock.Repository
                     {
                         Id = 0,
                         ProductId = 0,
-                        ImageURL = "https://thumb.cloud.mail.ru/thumb/xw1/Upload/NtapMarket/z.jpg?x-email=ntap.ru%40mail.ru"
+                        ImageURL = $"{userImage.Path}"
                     }
                 }
             };
@@ -503,9 +508,9 @@ namespace NtapMarket.Data.Mock.Repository
                         // Assign AttributeValueId and AttributeId from the general ModelList to the new User's Model and adds one
                     }
 
-                    productModel.ProductAttributeModel[LastAttributeNum].Name = productAttributeModelName;
-                    productModel.ProductAttributeModel[LastAttributeNum].Value = productAttributeModelValue;
-                    productModel.ProductAttributeModel[LastAttributeNum].Description = productAttributeModelDescription;
+                    productModel.ProductAttributeModel[LastAttributeNum].Name = AttributeModelName;
+                    productModel.ProductAttributeModel[LastAttributeNum].Value = AttributeModelValue;
+                    productModel.ProductAttributeModel[LastAttributeNum].Description = AttributeModelDescription;
                 }
             }
 
@@ -524,8 +529,6 @@ namespace NtapMarket.Data.Mock.Repository
                     // Assign new User's Id to the new User's Image Id
                 }
             }            
-
-
 
             _productModels.Add(productModel);
 
