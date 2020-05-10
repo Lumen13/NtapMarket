@@ -64,7 +64,7 @@ namespace NtapMarket.Web.Seller.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct                                // makes method async
+        public async Task<IActionResult> AddProduct                                     // makes method async
             (string name, 
             int count, 
             decimal price, 
@@ -93,7 +93,7 @@ namespace NtapMarket.Web.Seller.Controllers
                 string path = "/Files/" + uploadedFile.FileName;
                 using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
                 {
-                    await uploadedFile.CopyToAsync(fileStream);                         // async 
+                    await uploadedFile.CopyToAsync(fileStream);                             // async 
                 }
             }
 
