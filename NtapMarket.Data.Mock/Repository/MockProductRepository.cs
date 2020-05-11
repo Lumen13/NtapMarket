@@ -387,6 +387,7 @@ namespace NtapMarket.Data.Mock.Repository
                 }
             }
         };
+        private List<UserImageModel> userImageModels = new List<UserImageModel>();
 
         public List<ProductModel> GetProductModels(int sellerId)
         {
@@ -425,10 +426,21 @@ namespace NtapMarket.Data.Mock.Repository
             string AttributeModelName,
             string AttributeModelValue,
             string AttributeModelDescription,
-            IFormFile uploadedFile)
+            IFormFileCollection uploadedFiles)
         {
-            string path = "/Files/" + uploadedFile.FileName;
-            UserImageModel userImage = new UserImageModel { Name = uploadedFile.FileName, Path = path };
+            foreach (var uploadedFile in uploadedFiles)
+            {
+                string path = "/Files/" + uploadedFile.FileName;
+                int counter = 0;
+
+                userImageModels.Add(
+                    new UserImageModel()
+                    {
+                        Id = counter++,
+                        Name = uploadedFile.FileName,
+                        Path = path
+                    });                
+            }
 
             var productModel = new ProductModel()
             {
@@ -475,15 +487,7 @@ namespace NtapMarket.Data.Mock.Repository
                     }
                 },
 
-                ProductImage = new List<ProductImage>()
-                {
-                    new ProductImage()
-                    {
-                        Id = 0,
-                        ProductId = 0,
-                        ImageURL = $"{userImage.Path}"
-                    }
-                }
+                UserImageList = userImageModels
             };
 
             for (int i = _productModels.Count - 1; i < _productModels.Count; i++)
@@ -512,23 +516,7 @@ namespace NtapMarket.Data.Mock.Repository
                     productModel.ProductAttributeModel[LastAttributeNum].Value = AttributeModelValue;
                     productModel.ProductAttributeModel[LastAttributeNum].Description = AttributeModelDescription;
                 }
-            }
-
-            for (int _LastModelNum = _productModels.Count - 1; _LastModelNum < _productModels.Count; _LastModelNum++)
-            {
-                for (int LastImageNum = productModel.ProductImage.Count - 1; LastImageNum < productModel.ProductImage.Count; LastImageNum++)
-                {
-                    for (int _LastImageNum = _productModels[_LastModelNum].ProductImage.Count - 1; _LastImageNum < _productModels[_LastModelNum].ProductImage.Count; _LastImageNum++)
-                    {
-                        productModel.ProductImage[LastImageNum].Id =
-                            _productModels[_LastModelNum].ProductImage[_LastImageNum].Id + 1;
-                        // Assign ImageId from the general ModelList to the new User's Image and adds one
-                    }
-
-                    productModel.ProductImage[LastImageNum].ProductId = productModel.Id;
-                    // Assign new User's Id to the new User's Image Id
-                }
-            }            
+            }     
 
             _productModels.Add(productModel);
 

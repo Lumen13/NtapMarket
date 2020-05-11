@@ -25,8 +25,9 @@
         <label>Полное описание атрибута:</label><br />
         <input type="text" name="AttributeModelDescription" /><br /><br />
         <hr>
-        <label>Загрузите изображения:</label><br>
-        <input type="file" name="uploadedFile" /><br><br>
+        <label>Загрузите до 10 изображений</label><br>
+        <input type="file" multiple accept="image/*,image/jpeg" name="uploadedFiles" />
+        <hr>
         <input type="submit" value="Отправить" />
     </div>
 </form>

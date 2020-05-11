@@ -26,4 +26,11 @@
             <img src="@item.ImageURL" class="img-fluid" alt="Responsive image">
         }
     </li>
+    <li>
+        <br>
+        @foreach (var item in Model.UserImageList)
+        {
+            <p><img src="@Url.Content(item.Path)"/></p>
+        }
+    </li>
 </ul>

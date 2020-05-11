@@ -74,7 +74,7 @@ namespace NtapMarket.Web.Seller.Controllers
             string AttributeModelName,
             string AttributeModelValue,
             string AttributeModelDescription,
-            IFormFile uploadedFile)                                                     // added Http.Features Component in the Interface!
+            IFormFileCollection uploadedFiles)                                                     // added Http.Features Component in the Interface!
         {
             _productModelRepository.SetProductModel
                 (name,
@@ -86,15 +86,13 @@ namespace NtapMarket.Web.Seller.Controllers
                 AttributeModelName,
                 AttributeModelValue,
                 AttributeModelDescription,
-                uploadedFile);
+                uploadedFiles);
 
-            if (uploadedFile != null)
+            foreach (var uploadedFile in uploadedFiles)
             {
                 string path = "/Files/" + uploadedFile.FileName;
-                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-                {
-                    await uploadedFile.CopyToAsync(fileStream);                             // async 
-                }
+                using var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create);
+                await uploadedFile.CopyToAsync(fileStream);                             // async 
             }
 
             return new LocalRedirectResult($"~/Home/Index/");
