@@ -1,6 +1,4 @@
-﻿@{
-    ViewData["Title"] = "AddProduct";
-}
+﻿@model List<NtapMarket.Data.ObjectModel.ProductModel>
 
 <form asp-action="AddProduct" asp-controller="Home" method="Post" enctype="multipart/form-data">
     <div method="post">
@@ -13,6 +11,14 @@
         <label>Полное описание товара:</label><br />
         <input type="text" name="marketingInfo" /><br /><br />
         <hr>
+        <select class="custom-select">
+        <option selected>Выберите категорию</option>
+        @foreach (NtapMarket.Data.ObjectModel.ProductModel item in Model)
+        { 
+            <option value="@item.ProductCategoryId">@item.ProductCategory.Name</option>
+        }
+            <option>Новая категория</option>
+        </select>
         <label>Название новой категории:</label><br />
         <input type="text" name="CategoryName" /><br /><br />
         <label>Полное описание категории:</label><br />

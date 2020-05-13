@@ -60,7 +60,10 @@ namespace NtapMarket.Web.Seller.Controllers
         [HttpGet]
         public IActionResult AddProduct()
         {
-            return View();
+            List<ProductModel> productModels = _productModelRepository.GetProductModels(SellerId);
+            productModels = productModels.GroupBy(x => x.ProductCategory.Id).Select(x => x.First()).ToList();
+
+            return View(productModels);
         }
 
         [HttpPost]
@@ -79,7 +82,7 @@ namespace NtapMarket.Web.Seller.Controllers
             _productModelRepository.SetProductModel
                 (name,
                 count,
-                price, 
+                price,
                 marketingInfo,
                 CategoryName,
                 CategoryDescription,
@@ -90,6 +93,10 @@ namespace NtapMarket.Web.Seller.Controllers
 
             foreach (var uploadedFile in uploadedFiles)
             {
+                if (uploadedFiles.Count > 10)                                               // checking for 10 images
+                {
+                    return new LocalRedirectResult($"~/Home/Index/");
+                }
                 string path = "/Files/" + uploadedFile.FileName;
                 using var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create);
                 await uploadedFile.CopyToAsync(fileStream);                             // async 

@@ -387,7 +387,7 @@ namespace NtapMarket.Data.Mock.Repository
                 }
             }
         };
-        private List<UserImageModel> userImageModels = new List<UserImageModel>();
+        private List<UserImageModel> _userImageModels = new List<UserImageModel>();
 
         public List<ProductModel> GetProductModels(int sellerId)
         {
@@ -428,12 +428,21 @@ namespace NtapMarket.Data.Mock.Repository
             string AttributeModelDescription,
             IFormFileCollection uploadedFiles)
         {
+
+            var productList = new List<ProductModel>();
+
+            for (int i = 0; i < _productModels.Count; i++)
+            {
+                productList.Add(_productModels[i]);   
+            }
+            //_userImageModels.Capacity = 10;
+
             foreach (var uploadedFile in uploadedFiles)
             {
                 string path = "/Files/" + uploadedFile.FileName;
                 int counter = 0;
 
-                userImageModels.Add(
+                _userImageModels.Add(
                     new UserImageModel()
                     {
                         Id = counter++,
@@ -487,7 +496,7 @@ namespace NtapMarket.Data.Mock.Repository
                     }
                 },
 
-                UserImageList = userImageModels
+                UserImageList = _userImageModels
             };
 
             for (int i = _productModels.Count - 1; i < _productModels.Count; i++)
