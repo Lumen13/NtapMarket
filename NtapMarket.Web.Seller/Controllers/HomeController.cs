@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor.Compilation;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using NtapMarket.Data.DBModel;
 using NtapMarket.Data.EF;
@@ -77,6 +78,7 @@ namespace NtapMarket.Web.Seller.Controllers
             string AttributeModelName,
             string AttributeModelValue,
             string AttributeModelDescription,
+            ProductCategory SelectModel,
             IFormFileCollection uploadedFiles)                                                     // added Http.Features Component in the Interface!
         {
             _productModelRepository.SetProductModel
@@ -89,6 +91,7 @@ namespace NtapMarket.Web.Seller.Controllers
                 AttributeModelName,
                 AttributeModelValue,
                 AttributeModelDescription,
+                SelectModel,
                 uploadedFiles);
 
             foreach (var uploadedFile in uploadedFiles)

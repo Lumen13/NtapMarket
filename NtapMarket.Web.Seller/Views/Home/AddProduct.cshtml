@@ -11,14 +11,12 @@
         <label>Полное описание товара:</label><br />
         <input type="text" name="marketingInfo" /><br /><br />
         <hr>
-        <select class="custom-select">
-        <option selected>Выберите категорию</option>
-        @foreach (NtapMarket.Data.ObjectModel.ProductModel item in Model)
-        { 
-            <option value="@item.ProductCategoryId">@item.ProductCategory.Name</option>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            @Html.DropDownList("SelectModel", new SelectList(Model),
+            "Выберите категорию", new { @class = "form-control" })
         }
-            <option>Новая категория</option>
-        </select>
+        <hr>
         <label>Название новой категории:</label><br />
         <input type="text" name="CategoryName" /><br /><br />
         <label>Полное описание категории:</label><br />
@@ -37,3 +35,4 @@
         <input type="submit" value="Отправить" />
     </div>
 </form>
+

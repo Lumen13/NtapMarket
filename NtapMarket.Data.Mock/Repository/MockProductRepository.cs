@@ -5,6 +5,7 @@ using NtapMarket.Data.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -118,7 +119,7 @@ namespace NtapMarket.Data.Mock.Repository
                 ProductCategoryId = 2,
                 Count = 2,
                 MarketingInfo = "Тоже интересная вещь. но не очень",
-                Name = "Ледяная скорбь",
+                Name = "Меч Ледяная скорбь",
                 Price = 40000,
 
                 ProductCategory = new ProductCategory()
@@ -200,7 +201,7 @@ namespace NtapMarket.Data.Mock.Repository
                 ProductCategoryId = 1,
                 Count = 1,
                 MarketingInfo = "Невероятно бесполезная штука",
-                Name = "Урал 880",
+                Name = "Газонокосилка Урал 880",
                 Price = 46500,
 
                 ProductCategory = new ProductCategory()
@@ -297,7 +298,7 @@ namespace NtapMarket.Data.Mock.Repository
                 ProductCategoryId = 1,
                 Count = 3,
                 MarketingInfo = "Польза этой вещи весьма сомнительна",
-                Name = "Урал Турбо",
+                Name = "Газонокосилка Урал Турбо",
                 Price = 70500,
 
                 ProductCategory = new ProductCategory()
@@ -385,6 +386,96 @@ namespace NtapMarket.Data.Mock.Repository
                         ImageURL = "https://thumb.cloud.mail.ru/thumb/xw1/Upload/NtapMarket/444.jpg?x-email=ntap.ru%40mail.ru"
                     }
                 }
+            },
+
+            new ProductModel()
+            {
+                Id = 5,
+                SellerId = 1,
+                ProductCategoryId = 3,
+                Count = 3,
+                MarketingInfo = "Супер-вещь",
+                Name = "Бензопила Stihl 180",
+                Price = 38000,
+
+                ProductCategory = new ProductCategory()
+                {
+                    Id = 3,
+                    ParentId = null,
+                    Name = "Бензопилы",
+                    Description = "Бензопилами бензопилят дерево"
+                },
+
+                Seller = new Seller()
+                {
+                    Id = 1,
+                    Name = "Борис",
+                    Email = "kolbaska@mail.ru",
+                    Phone = "88002220022"
+                },
+
+                ProductAttributeModel = new List<ProductAttributeModel>()
+                {
+                    new ProductAttributeModel()
+                    {
+                        ProductAttributeId = 1,
+                        ProductAttributeValueId = 16,
+                        Name = "Тип питания",
+                        Value = "Бензиновая",
+                        Description = "Газонокосилки бензиновые являются самым распространённым типом косилок. " +
+                        "Двигатель внутреннего сгорания обеспечивает газонокосилку высокой мощностью, " +
+                        "что позволяет использовать их на больших территориях. " +
+                        "Основным преимуществом бензиновых газонокосилок является высокая мобильность, " +
+                        "другими словами, при работе с такой косилкой нет никаких ограничений в виде кабеля, " +
+                        "ограничивающего свободу перемещения косилки. " +
+                        "Недостатками бензиновых газонокосилок являются высокий вес, " +
+                        "шум при работе и низкая экологичность."
+                    },
+
+                    new ProductAttributeModel()
+                    {
+                        ProductAttributeId = 3,
+                        ProductAttributeValueId = 17,
+                        Name = "Материал корпуса",
+                        Value = "Металл",
+                        Description = ""
+                    },
+
+                    new ProductAttributeModel()
+                    {
+                        ProductAttributeId = 4,
+                        ProductAttributeValueId = 18,
+                        Name = "Вес",
+                        Value = "8 кг",
+                        Description = ""
+                    }
+                },
+
+                ProductImage = new List<ProductImage>()
+                {
+                    new ProductImage()
+                    {
+                        Id = 13,
+                        ProductId = 5,
+                        ImageURL = "https://thumb.cloud.mail.ru/thumb/xw1/Upload/NtapMarket/5-1.jpeg?x-email=ntap.ru%40mail.ru"
+                    },
+
+                    new ProductImage()
+                    {
+                        Id = 14,
+                        ProductId = 5,
+                        ImageURL = "https://thumb.cloud.mail.ru/thumb/xw1/Upload/NtapMarket/5-2.jpg?x-email=ntap.ru%40mail.ru"
+                    },
+
+                    new ProductImage()
+                    {
+                        Id = 15,
+                        ProductId = 5,
+                        ImageURL = "https://thumb.cloud.mail.ru/thumb/xw1/Upload/NtapMarket/5.jpg?x-email=ntap.ru%40mail.ru"
+                    }
+                },
+
+
             }
         };
         private List<UserImageModel> _userImageModels = new List<UserImageModel>();
@@ -426,9 +517,9 @@ namespace NtapMarket.Data.Mock.Repository
             string AttributeModelName,
             string AttributeModelValue,
             string AttributeModelDescription,
+            ProductCategory SelectModel,
             IFormFileCollection uploadedFiles)
         {
-
             var productList = new List<ProductModel>();
 
             for (int i = 0; i < _productModels.Count; i++)
@@ -436,6 +527,26 @@ namespace NtapMarket.Data.Mock.Repository
                 productList.Add(_productModels[i]);   
             }
             //_userImageModels.Capacity = 10;
+
+            if (CategoryName == null)
+            {
+                List<ProductModel> productModels = _productModels;
+                productModels = productModels.GroupBy(x => x.ProductCategory.Id).Select(x => x.First()).ToList();
+
+                //foreach (var item in productModels)
+                //{
+                //    if (item.ProductCategory.Name == null)
+                //    {
+                //        continue;
+                //    }
+                //    else
+                //    {
+                //        CategoryName = item.ProductCategory.Name;
+                //        CategoryDescription = item.ProductCategory.Description;
+                //        item.ProductCategory.Id = item.ProductCategoryId;
+                //    }
+                //}
+            }
 
             foreach (var uploadedFile in uploadedFiles)
             {
@@ -498,6 +609,16 @@ namespace NtapMarket.Data.Mock.Repository
 
                 UserImageList = _userImageModels
             };
+
+            //switch (productModel.ProductCategoryId)
+            //{
+            //    case 1:
+            //        productModel.ProductCategory.Id = 1;
+            //        productModel.ProductCategory.Name = _productModels
+
+            //    default: 0
+            //        break;
+            //}
 
             for (int i = _productModels.Count - 1; i < _productModels.Count; i++)
             {
