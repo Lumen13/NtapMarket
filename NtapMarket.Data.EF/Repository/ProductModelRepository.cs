@@ -82,7 +82,7 @@ namespace NtapMarket.Data.EF.Repository
             string AttributeModelName,
             string AttributeModelValue,
             string AttributeModelDescription,
-            ProductCategory SelectModel,
+            int SelectModel,
             IFormFileCollection uploadedFiles)
         {
             return null;

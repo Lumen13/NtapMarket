@@ -517,7 +517,7 @@ namespace NtapMarket.Data.Mock.Repository
             string AttributeModelName,
             string AttributeModelValue,
             string AttributeModelDescription,
-            ProductCategory SelectModel,
+            int SelectModel,
             IFormFileCollection uploadedFiles)
         {
             var productList = new List<ProductModel>();

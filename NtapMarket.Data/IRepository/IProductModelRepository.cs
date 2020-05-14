@@ -23,7 +23,7 @@ namespace NtapMarket.Data.IRepository
             string AttributeModelName,
             string AttributeModelValue,
             string AttributeModelDescription,
-            ProductCategory SelectModel,
+            int SelectModel,
             IFormFileCollection uploadedFiles);
 
         void PushProductModel(ProductModel productModel);

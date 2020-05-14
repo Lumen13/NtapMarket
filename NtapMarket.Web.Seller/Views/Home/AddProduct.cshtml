@@ -1,4 +1,13 @@
-﻿@model List<NtapMarket.Data.ObjectModel.ProductModel>
+﻿@model UserProductVM
+
+@using(Html.BeginForm("AddProduct", "Home", FormMethod.Post))
+{
+    @Html.TextBoxFor(x => x.Name);
+    @Html.TextAreaFor(x => x.MarketingInfo);
+
+
+
+}
 
 <form asp-action="AddProduct" asp-controller="Home" method="Post" enctype="multipart/form-data">
     <div method="post">
@@ -11,10 +20,26 @@
         <label>Полное описание товара:</label><br />
         <input type="text" name="marketingInfo" /><br /><br />
         <hr>
-        @for (int i = 0; i < Model.Count; i++)
-        {
-            @Html.DropDownList("SelectModel", new SelectList(Model),
-            "Выберите категорию", new { @class = "form-control" })
+        @{
+                var categories = new[]
+                {
+                new
+                {
+                    name = "Газонокосилки",
+                    value = 1
+                },
+
+                new
+                {
+                    name = "Бензопилы",
+                    value = 2
+                }
+            };
+
+            var selectListModel = new SelectList(categories, "value", "name");
+
+        @Html.DropDownList("SelectModel", selectListModel,
+        "Выберите категорию", new { @class = "form-control" });
         }
         <hr>
         <label>Название новой категории:</label><br />

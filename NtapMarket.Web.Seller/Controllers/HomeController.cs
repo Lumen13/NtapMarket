@@ -61,38 +61,18 @@ namespace NtapMarket.Web.Seller.Controllers
         [HttpGet]
         public IActionResult AddProduct()
         {
-            List<ProductModel> productModels = _productModelRepository.GetProductModels(SellerId);
-            productModels = productModels.GroupBy(x => x.ProductCategory.Id).Select(x => x.First()).ToList();
-
-            return View(productModels);
+            return View(new UserProductVM());
         }
 
         [HttpPost]
         public async Task<IActionResult> AddProduct                                     // makes method async
-            (string name, 
-            int count, 
-            decimal price, 
-            string marketingInfo,
-            string CategoryName,
-            string CategoryDescription,
-            string AttributeModelName,
-            string AttributeModelValue,
-            string AttributeModelDescription,
-            ProductCategory SelectModel,
-            IFormFileCollection uploadedFiles)                                                     // added Http.Features Component in the Interface!
+            (UserProductVM userProductVM)                                                     // added Http.Features Component in the Interface!
         {
+            var productModel = new ProductModel();
+            productModel.Name = userProductVM.Name;
+
             _productModelRepository.SetProductModel
-                (name,
-                count,
-                price,
-                marketingInfo,
-                CategoryName,
-                CategoryDescription,
-                AttributeModelName,
-                AttributeModelValue,
-                AttributeModelDescription,
-                SelectModel,
-                uploadedFiles);
+                (userProductVM);
 
             foreach (var uploadedFile in uploadedFiles)
             {
