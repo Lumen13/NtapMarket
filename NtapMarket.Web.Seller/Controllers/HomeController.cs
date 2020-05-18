@@ -10,11 +10,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using NtapMarket.Data.DBModel;
 using NtapMarket.Data.EF;
+using NtapMarket.Data.EF.Repository;
 using NtapMarket.Data.IRepository;
-using NtapMarket.Data.Mock.Repository;
 using NtapMarket.Data.ObjectModel;
 using NtapMarket.Web.Seller.Models;
 
@@ -65,25 +66,14 @@ namespace NtapMarket.Web.Seller.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct                                     // makes method async
-            (UserProductVM userProductVM)                                                     // added Http.Features Component in the Interface!
+        public IActionResult AddProduct(UserProductVM userProductVM)
         {
-            var productModel = new ProductModel();
-            productModel.Name = userProductVM.Name;
-
-            _productModelRepository.SetProductModel
-                (userProductVM);
-
-            foreach (var uploadedFile in uploadedFiles)
+            if (ModelState.IsValid == false)
             {
-                if (uploadedFiles.Count > 10)                                               // checking for 10 images
-                {
-                    return new LocalRedirectResult($"~/Home/Index/");
-                }
-                string path = "/Files/" + uploadedFile.FileName;
-                using var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create);
-                await uploadedFile.CopyToAsync(fileStream);                             // async 
+                return View(userProductVM);
             }
+
+            _productModelRepository.PushProductModel(userProductVM, SellerId);
 
             return new LocalRedirectResult($"~/Home/Index/");
         }

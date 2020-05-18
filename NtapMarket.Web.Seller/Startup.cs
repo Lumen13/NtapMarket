@@ -12,12 +12,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NtapMarket.Data.EF.Repository;
 using NtapMarket.Data.IRepository;
-using NtapMarket.Data.Mock.Repository;
 
 namespace NtapMarket.Web.Seller
 {
     public class Startup
     {
+        private IWebHostEnvironment webHostEnvironment { get; set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,8 +32,7 @@ namespace NtapMarket.Web.Seller
             services.AddControllersWithViews();
             services.AddSingleton<IProductModelRepository>(serviceProvider =>
             {
-                //return new ProductModelRepository(Configuration.GetConnectionString("NtapMarket"));
-                return new MockProductRepository();
+                return new ProductModelRepository(Configuration.GetConnectionString("NtapMarket"), webHostEnvironment.ContentRootPath);
             });
 
             services.AddControllersWithViews(mvcOtions =>
@@ -44,6 +44,8 @@ namespace NtapMarket.Web.Seller
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            webHostEnvironment = env;
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

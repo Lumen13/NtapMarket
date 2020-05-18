@@ -13,19 +13,6 @@ namespace NtapMarket.Data.IRepository
 
         ProductModel GetProductModel(int Id);
 
-        ProductModel SetProductModel
-            (string name,
-            int count, 
-            decimal price, 
-            string marketingInfo,
-            string CategoryName,
-            string CategoryDescription,
-            string AttributeModelName,
-            string AttributeModelValue,
-            string AttributeModelDescription,
-            int SelectModel,
-            IFormFileCollection uploadedFiles);
-
-        void PushProductModel(ProductModel productModel);
+        ProductModel PushProductModel(IAddedProductModel addedProductModel, int sellerId);
     }
 }

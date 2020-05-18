@@ -65,6 +65,8 @@ namespace NtapMarket.Data.EF
                     .HasForeignKey(fk => fk.ProductCategoryId)
                     .HasPrincipalKey(pk => pk.Id)
                     .OnDelete(DeleteBehavior.Restrict);
+                builder.Property(x => x.ProductCategoryId)
+                    .IsRequired(false);
             });
 
             modelBuilder.Entity<ProductAttribute>(builder =>
@@ -111,6 +113,7 @@ namespace NtapMarket.Data.EF
                     .HasForeignKey(fk => fk.ProductId)
                     .HasPrincipalKey(pk => pk.Id)
                     .OnDelete(DeleteBehavior.Restrict);
+                builder.Ignore(x => x.ImageFile);
             });
 
             modelBuilder.Entity<Order>(builder =>

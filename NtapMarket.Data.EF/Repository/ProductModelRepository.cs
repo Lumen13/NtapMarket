@@ -4,6 +4,7 @@ using NtapMarket.Data.IRepository;
 using NtapMarket.Data.ObjectModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -13,10 +14,12 @@ namespace NtapMarket.Data.EF.Repository
     public class ProductModelRepository : IProductModelRepository
     {
         private DBContext _dBContext { get; set; }
+        private string _webRootPath { get; set; }
 
-        public ProductModelRepository(string connectionString)
+        public ProductModelRepository(string connectionString, string webRootPath)
         {
             _dBContext = new DBContext(connectionString);
+            _webRootPath = webRootPath;
         }
 
         public List<ProductModel> GetProductModels(int sellerId)
@@ -67,30 +70,90 @@ namespace NtapMarket.Data.EF.Repository
             return productModels;
         }
 
-        public ProductModel GetProductModel(int Id)
+        public ProductModel GetProductModel(int productId)
         {
-            return null;
+            var product = _dBContext.Products.Find(productId);
+            var productImages = _dBContext.ProductImages.Where(x => x.ProductId == productId).ToList();
+            var attributeValues = _dBContext.ProductAttributeValues.Where(x => x.ProductId == productId).ToList();
+            var productCategory = _dBContext.ProductCategories.Find(product.ProductCategoryId);
+            var seller = _dBContext.Sellers.Find(product.SellerId);
+            var productAttributeModels = new List<ProductAttributeModel>();
+
+            foreach (var attributeValue in attributeValues)
+            {
+                var attributeInfo = _dBContext.ProductAttributes.Find(attributeValue.ProductAttributeId);
+                var productAttributeModel = new ProductAttributeModel()
+                {
+                    Name = attributeInfo.Name,
+                    Value = attributeValue.Value,
+                    Description = attributeInfo.Description,
+                    ProductAttributeId = attributeInfo.Id,
+                    ProductAttributeValueId = attributeValue.Id
+                };
+                productAttributeModels.Add(productAttributeModel);
+            }
+
+            ProductModel productModel = new ProductModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Count = product.Count,
+                Price = product.Price,
+                MarketingInfo = product.MarketingInfo,
+                ProductCategoryId = product.ProductCategoryId,
+                SellerId = product.SellerId,
+                ProductCategory = productCategory,
+                Seller = seller,
+                ProductImage = productImages,
+                ProductAttributeModel = productAttributeModels
+            };
+
+            return productModel;
         }
 
-        public ProductModel SetProductModel
-            (string name,
-            int count, 
-            decimal price,
-            string marketingInfo,
-            string CategoryName,
-            string CategoryDescription,
-            string AttributeModelName,
-            string AttributeModelValue,
-            string AttributeModelDescription,
-            int SelectModel,
-            IFormFileCollection uploadedFiles)
+        public ProductModel PushProductModel(IAddedProductModel addedProductModel, int sellerId)
         {
-            return null;
-        }
+            Product product = new Product()
+            {
+                Name = addedProductModel.Name,
+                Count = addedProductModel.Count,
+                Price = addedProductModel.Price,
+                MarketingInfo = addedProductModel.MarketingInfo,
+                ProductCategoryId = addedProductModel.CategoryId,
+                SellerId = sellerId
+            };
 
-        public void PushProductModel(ProductModel productModel)
-        {
+            _dBContext.Products.Add(product);
+            _dBContext.SaveChanges();
 
+            foreach (var addedImage in addedProductModel.UploadedImages)
+            {
+                var imagePath = $"{_webRootPath}/Images/sellerId_{sellerId}/productId_{product.Id}/";
+                var imageName = Guid.NewGuid() + "." + addedImage.ContentType.Split("/").Last();
+
+                var productImage = new ProductImage()
+                {
+                    ImageURL = imagePath + imageName,
+                    ProductId = product.Id
+                };
+
+                if (Directory.Exists(imagePath) == false)
+                {
+                    Directory.CreateDirectory(imagePath);
+                }
+
+                using (var fileStream = new FileStream(productImage.ImageURL, FileMode.Create)) 
+                {
+                    addedImage.CopyTo(fileStream);
+                }
+
+                _dBContext.ProductImages.Add(productImage);
+                _dBContext.SaveChanges();
+            }
+
+            var productModel = GetProductModel(product.Id);
+
+            return productModel;
         }
     }
 }
