@@ -14,5 +14,7 @@ namespace NtapMarket.Data.IRepository
         ProductModel GetProductModel(int Id);
 
         ProductModel PushProductModel(IAddedProductModel addedProductModel, int sellerId);
+
+        void DeleteProducts(int SellerId);
     }
 }

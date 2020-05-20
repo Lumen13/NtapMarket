@@ -25,7 +25,7 @@ namespace NtapMarket.Web.Seller.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductModelRepository _productModelRepository;
-        private readonly int SellerId = 1;
+        private readonly int SellerId = 2;
         IWebHostEnvironment _appEnvironment;                                //      Added
 
         public string PublicInfo { get; set; }
@@ -74,6 +74,13 @@ namespace NtapMarket.Web.Seller.Controllers
             }
 
             _productModelRepository.PushProductModel(userProductVM, SellerId);
+
+            return new LocalRedirectResult($"~/Home/Index/");
+        }
+
+        public IActionResult DeleteProducts(int SellerId)
+        {
+            _productModelRepository.DeleteProducts(SellerId);
 
             return new LocalRedirectResult($"~/Home/Index/");
         }

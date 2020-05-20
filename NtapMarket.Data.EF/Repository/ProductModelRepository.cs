@@ -128,7 +128,10 @@ namespace NtapMarket.Data.EF.Repository
 
             foreach (var addedImage in addedProductModel.UploadedImages)
             {
-                var imagePath = $"{_webRootPath}/Images/sellerId_{sellerId}/productId_{product.Id}/";
+                var imagePath = $"SellerImages\\sellerId_{sellerId}\\productId_{product.Id}\\";
+
+                var fullPath = $"{_webRootPath}\\wwwroot\\{imagePath}";
+
                 var imageName = Guid.NewGuid() + "." + addedImage.ContentType.Split("/").Last();
 
                 var productImage = new ProductImage()
@@ -137,12 +140,12 @@ namespace NtapMarket.Data.EF.Repository
                     ProductId = product.Id
                 };
 
-                if (Directory.Exists(imagePath) == false)
+                if (Directory.Exists(fullPath) == false)
                 {
-                    Directory.CreateDirectory(imagePath);
+                    Directory.CreateDirectory(fullPath);
                 }
 
-                using (var fileStream = new FileStream(productImage.ImageURL, FileMode.Create)) 
+                using (var fileStream = new FileStream(fullPath + imageName, FileMode.Create)) 
                 {
                     addedImage.CopyTo(fileStream);
                 }
@@ -154,6 +157,44 @@ namespace NtapMarket.Data.EF.Repository
             var productModel = GetProductModel(product.Id);
 
             return productModel;
+        }
+
+        public void DeleteProducts(int SellerId)
+        {
+            for (int i = 0; i < _dBContext.ProductAttributeValues.Count(); i++)
+            {
+                if (_dBContext.ProductAttributeValues.Local.FirstOrDefault() != null)
+                {
+                    _dBContext.Remove(_dBContext.ProductAttributes.Local.FirstOrDefault());
+                }
+            }
+
+            for (int i = 0; i < _dBContext.ProductAttributes.Count(); i++)
+            {
+                if (_dBContext.ProductAttributes.Local.FirstOrDefault() != null)
+                {
+                    _dBContext.Remove(_dBContext.ProductAttributes.Local.FirstOrDefault());
+                }
+            }
+
+            for (int i = 0; i < _dBContext.ProductImages.Count(); i++)
+            {
+                if (_dBContext.ProductImages.Local.FirstOrDefault() != null)
+                {
+                    _dBContext.Remove(_dBContext.ProductImages.Local.FirstOrDefault());
+                }
+            }            
+
+            for (int i = 0; i < _dBContext.Products.Count(); i++)
+            {
+
+                if (_dBContext.Products.Local.FirstOrDefault() != null)
+                {
+                    _dBContext.Remove(_dBContext.Products.Local.FirstOrDefault());
+                }
+            }
+
+            _dBContext.SaveChanges();
         }
     }
 }
