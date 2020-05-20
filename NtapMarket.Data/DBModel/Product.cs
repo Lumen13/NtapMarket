@@ -13,5 +13,6 @@ namespace NtapMarket.Data.DBModel
         public string MarketingInfo { get; set; }
         public int Count { get; set; }
         public decimal Price { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

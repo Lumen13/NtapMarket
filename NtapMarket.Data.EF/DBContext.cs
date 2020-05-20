@@ -67,6 +67,8 @@ namespace NtapMarket.Data.EF
                     .OnDelete(DeleteBehavior.Restrict);
                 builder.Property(x => x.ProductCategoryId)
                     .IsRequired(false);
+                builder.Property(x => x.IsDeleted)
+                    .IsRequired(true);
             });
 
             modelBuilder.Entity<ProductAttribute>(builder =>

@@ -25,7 +25,7 @@ namespace NtapMarket.Data.EF.Repository
         public List<ProductModel> GetProductModels(int sellerId)
         {
             List<ProductModel> productModels = new List<ProductModel>();
-            var products = _dBContext.Products.Where(x => x.SellerId == sellerId).ToList();
+            var products = _dBContext.Products.Where(x => x.SellerId == sellerId && x.IsDeleted == false).ToList();
             foreach (var product in products)
             {
                 ProductModel model = new ProductModel()
@@ -73,6 +73,12 @@ namespace NtapMarket.Data.EF.Repository
         public ProductModel GetProductModel(int productId)
         {
             var product = _dBContext.Products.Find(productId);
+
+            if (product.IsDeleted == true)
+            {
+                return null;
+            }
+
             var productImages = _dBContext.ProductImages.Where(x => x.ProductId == productId).ToList();
             var attributeValues = _dBContext.ProductAttributeValues.Where(x => x.ProductId == productId).ToList();
             var productCategory = _dBContext.ProductCategories.Find(product.ProductCategoryId);
@@ -159,39 +165,12 @@ namespace NtapMarket.Data.EF.Repository
             return productModel;
         }
 
-        public void DeleteProducts(int SellerId)
+        public void DeleteProducts(int sellerId)
         {
-            for (int i = 0; i < _dBContext.ProductAttributeValues.Count(); i++)
+            var products = _dBContext.Products.Where(x => x.SellerId == sellerId);
+            foreach (var product in products)
             {
-                if (_dBContext.ProductAttributeValues.Local.FirstOrDefault() != null)
-                {
-                    _dBContext.Remove(_dBContext.ProductAttributes.Local.FirstOrDefault());
-                }
-            }
-
-            for (int i = 0; i < _dBContext.ProductAttributes.Count(); i++)
-            {
-                if (_dBContext.ProductAttributes.Local.FirstOrDefault() != null)
-                {
-                    _dBContext.Remove(_dBContext.ProductAttributes.Local.FirstOrDefault());
-                }
-            }
-
-            for (int i = 0; i < _dBContext.ProductImages.Count(); i++)
-            {
-                if (_dBContext.ProductImages.Local.FirstOrDefault() != null)
-                {
-                    _dBContext.Remove(_dBContext.ProductImages.Local.FirstOrDefault());
-                }
-            }            
-
-            for (int i = 0; i < _dBContext.Products.Count(); i++)
-            {
-
-                if (_dBContext.Products.Local.FirstOrDefault() != null)
-                {
-                    _dBContext.Remove(_dBContext.Products.Local.FirstOrDefault());
-                }
+                product.IsDeleted = true;
             }
 
             _dBContext.SaveChanges();

@@ -63,6 +63,13 @@ namespace NtapMarket.Web.Seller.Controllers
         public IActionResult AddProduct()
         {
             return View(new UserProductVM());
+
+                                                                        //UserProductVM userProductVM = new UserProductVM()
+                                                                        //{
+                                                                        //    Name = "asd"
+                                                                        //};
+
+                                                                        //return View(userProductVM);
         }
 
         [HttpPost]
