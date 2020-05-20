@@ -64,12 +64,12 @@ namespace NtapMarket.Web.Seller.Controllers
         {
             return View(new UserProductVM());
 
-                                                                        //UserProductVM userProductVM = new UserProductVM()
-                                                                        //{
-                                                                        //    Name = "asd"
-                                                                        //};
+                                                                    //UserProductVM userProductVM = new UserProductVM()
+                                                                    //{
+                                                                    //    Name = "asd"
+                                                                    //};
 
-                                                                        //return View(userProductVM);
+                                                                    //return View(userProductVM);
         }
 
         [HttpPost]
