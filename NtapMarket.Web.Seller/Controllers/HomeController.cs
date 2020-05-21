@@ -25,7 +25,7 @@ namespace NtapMarket.Web.Seller.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductModelRepository _productModelRepository;
-        private readonly int SellerId = 2;
+        private readonly int sellerId = 2;
         IWebHostEnvironment _appEnvironment;                                //      Added
 
         public string PublicInfo { get; set; }
@@ -41,7 +41,7 @@ namespace NtapMarket.Web.Seller.Controllers
 
         public IActionResult Index()
         {
-            List<ProductModel> productModels = _productModelRepository.GetProductModels(SellerId);
+            List<ProductModel> productModels = _productModelRepository.GetProductModels(sellerId);
 
             return View(productModels);            
         }
@@ -80,14 +80,22 @@ namespace NtapMarket.Web.Seller.Controllers
                 return View(userProductVM);
             }
 
-            _productModelRepository.PushProductModel(userProductVM, SellerId);
+            _productModelRepository.PushProductModel(userProductVM, sellerId);
 
             return new LocalRedirectResult($"~/Home/Index/");
         }
 
-        public IActionResult DeleteProducts(int SellerId)
+        public IActionResult DeleteProducts(int sellerId)
         {
-            _productModelRepository.DeleteProducts(SellerId);
+            _productModelRepository.DeleteProducts(sellerId);
+
+            return new LocalRedirectResult($"~/Home/Index/");
+        }
+
+        [Route("{Id}")]
+        public IActionResult DeleteProduct(int id)
+        {
+            _productModelRepository.DeleteProduct(id);
 
             return new LocalRedirectResult($"~/Home/Index/");
         }

@@ -21,16 +21,20 @@ namespace NtapMarket.Web.Seller.Models
         public int Count { get; set; }
 
         [Required]
+        [DisplayName("Цена продукта")]
         public decimal Price { get; set; }
 
+        [DisplayName("Подробная информация о товаре")]
         [MaxLength(1000, ErrorMessage = "Описание слишком длинное")]
         public string MarketingInfo { get; set; }
 
         public int? CategoryId { get; set; }
 
+        [DisplayName("Атрибуты продукта")]
         [MaxLength(10, ErrorMessage = "Максимальное число аттрибутов - 10")]
         public List<IAddedProductAttributeModel> UserAttributes { get; set; }
 
+        [DisplayName("Изображения продукта")]
         [MaxLength(10, ErrorMessage = "Максимальное кол-во изображений - 10")]
         public List<IFormFile> UploadedImages { get; set; }
     }

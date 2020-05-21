@@ -175,5 +175,16 @@ namespace NtapMarket.Data.EF.Repository
 
             _dBContext.SaveChanges();
         }
+
+        public void DeleteProduct(int id)
+        {
+            var products = _dBContext.Products.Where(x => x.Id == id);
+            foreach (var product in products)
+            {
+                product.IsDeleted = true;
+            }
+
+            _dBContext.SaveChanges();
+        }
     }
 }
