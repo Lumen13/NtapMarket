@@ -1,0 +1,48 @@
+﻿@model UserProductVM
+
+@using (Html.BeginForm("AddProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(x => x.Name, new { @class = "form-text text-muted" })
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Name, "", new { @class = "form-text text-muted " })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Count, new { @class = "form-text text-muted" })
+        @Html.TextBoxFor(x => x.Count, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Count, "", new { @class = "form-text text-muted " })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Price, new { @class = "form-text text-muted" })
+        @Html.TextBoxFor(x => x.Price, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Price, "", new { @class = "form-text text-muted" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.MarketingInfo, new { @class = "form-text text-muted" })
+        @Html.TextAreaFor(x => x.MarketingInfo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.MarketingInfo, "", new { @class = "form-text text-muted" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.UploadedImages, new { @class = "form-text text-muted" })
+        @Html.TextBoxFor(x => x.UploadedImages, new { @class = "btn btn-light", type = "file", multiple = "multiple", accept = "image/*,image/jpeg" })
+        @Html.ValidationMessageFor(x => x.UploadedImages, "", new { @class = "form-text text-muted" })
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col align-self-start">
+                <a class="btn btn-outline-info"
+                   asp-area=""
+                   asp-controller="Home"
+                   asp-action="Index"
+                   role="button">
+                    Отмена
+                </a>
+                <input type="submit" value="Сохранить" class="btn btn-success"/>
+            </div>
+        </div>
+    </div>
+
+    
+}

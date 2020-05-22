@@ -59,17 +59,10 @@ namespace NtapMarket.Web.Seller.Controllers
             return View(productModel);
         }
 
-        [HttpGet]
+        [HttpGet]        
         public IActionResult AddProduct()
         {
-            return View(new UserProductVM());
-
-                                                                    //UserProductVM userProductVM = new UserProductVM()
-                                                                    //{
-                                                                    //    Name = "asd"
-                                                                    //};
-
-                                                                    //return View(userProductVM);
+            return View(new UserProductVM());            
         }
 
         [HttpPost]
@@ -83,6 +76,22 @@ namespace NtapMarket.Web.Seller.Controllers
             _productModelRepository.PushProductModel(userProductVM, sellerId);
 
             return new LocalRedirectResult($"~/Home/Index/");
+        }
+
+        [HttpGet]
+        [Route("Edit/{Id}")]
+        public IActionResult EditProduct(int id)
+        {
+            ProductModel productModel = _productModelRepository.GetProductModel(id);
+            UserProductVM userProductVM = new UserProductVM()
+            {
+                Name = productModel.Name,
+                Count = productModel.Count,
+                Price = productModel.Price,
+                MarketingInfo = productModel.MarketingInfo
+            };
+
+            return View(userProductVM);
         }
 
         public IActionResult DeleteProducts(int sellerId)

@@ -132,32 +132,39 @@ namespace NtapMarket.Data.EF.Repository
             _dBContext.Products.Add(product);
             _dBContext.SaveChanges();
 
-            foreach (var addedImage in addedProductModel.UploadedImages)
+            if (addedProductModel.UploadedImages != null)
             {
-                var imagePath = $"SellerImages\\sellerId_{sellerId}\\productId_{product.Id}\\";
-
-                var fullPath = $"{_webRootPath}\\wwwroot\\{imagePath}";
-
-                var imageName = Guid.NewGuid() + "." + addedImage.ContentType.Split("/").Last();
-
-                var productImage = new ProductImage()
+                foreach (var addedImage in addedProductModel.UploadedImages)
                 {
-                    ImageURL = imagePath + imageName,
-                    ProductId = product.Id
-                };
+                    var imagePath = $"SellerImages\\sellerId_{sellerId}\\productId_{product.Id}\\";
 
-                if (Directory.Exists(fullPath) == false)
-                {
-                    Directory.CreateDirectory(fullPath);
+                    var fullPath = $"{_webRootPath}\\wwwroot\\{imagePath}";
+
+                    var imageName = Guid.NewGuid() + "." + addedImage.ContentType.Split("/").Last();
+
+                    var productImage = new ProductImage()
+                    {
+                        ImageURL = imagePath + imageName,
+                        ProductId = product.Id
+                    };
+
+                    if (Directory.Exists(fullPath) == false)
+                    {
+                        Directory.CreateDirectory(fullPath);
+                    }
+
+                    using (var fileStream = new FileStream(fullPath + imageName, FileMode.Create))
+                    {
+                        addedImage.CopyTo(fileStream);
+                    }
+
+                    _dBContext.ProductImages.Add(productImage);
+                    _dBContext.SaveChanges();
                 }
+            }
+            else
+            {
 
-                using (var fileStream = new FileStream(fullPath + imageName, FileMode.Create)) 
-                {
-                    addedImage.CopyTo(fileStream);
-                }
-
-                _dBContext.ProductImages.Add(productImage);
-                _dBContext.SaveChanges();
             }
 
             var productModel = GetProductModel(product.Id);

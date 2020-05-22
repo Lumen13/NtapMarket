@@ -4,8 +4,9 @@
 
 <hr>
 <ul class="list-unstyled">
-    <li><h3>@Model.Name</h3>
-    <hr>
+    <li>
+        <h3>@Model.Name</h3>
+        <hr>
     <li><h4>Id продавца этого товара - @Model.SellerId</h4></li>
     <li>
         <br><h5>О Категории:</h5>
@@ -21,15 +22,28 @@
             <ul><li>@item.Name - @item.Value</li></ul>
         }
     </li>
-    <li>
-        <a class="btn btn-outline-danger"
-            asp-area=""
-            asp-controller="Home"
-            asp-action="DeleteProduct"
-            role="button">
-            Удалить продукт
-        </a>
-    </li>
+</ul>
+<div class="container">
+    <div class="row">
+        <div class="col align-self-start">
+            <a class="btn btn-outline-info"
+               asp-area=""
+               asp-controller="Home"
+               asp-action="EditProduct"
+               role="button">
+                Изменить продукт
+            </a>
+            <a class="btn btn-outline-danger"
+               asp-area=""
+               asp-controller="Home"
+               asp-action="DeleteProduct"
+               role="button">
+                Удалить продукт
+            </a>
+        </div>        
+    </div>
+</div>
+<ul class="list-unstyled">
     <li>
         <br>
         @foreach (var item in Model.ProductImage)
