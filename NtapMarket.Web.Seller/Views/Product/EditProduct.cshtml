@@ -1,6 +1,6 @@
 ﻿@model NtapMarket.Data.ObjectModel.ProductModel
 
-@using (Html.BeginForm("EditProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
         @Html.LabelFor(x => x.Name, new { @class = "form-text text-muted" })
@@ -32,16 +32,12 @@
         <div class="row">
             <div class="col align-self-start">
                 <a class="btn btn-outline-info"
-                   asp-area=""
-                   asp-controller="Home"
-                   asp-action="Index"
+                   href="/Product/@Model.Id/"
                    role="button">
                     Отмена
                 </a>
                 <input type="submit" value="Сохранить" class="btn btn-success"/>
             </div>
         </div>
-    </div>
-
-    
+    </div>    
 }

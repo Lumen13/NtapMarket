@@ -1,6 +1,6 @@
 ﻿@model UserProductVM
 
-@using (Html.BeginForm("AddProduct", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-group">
         @Html.LabelFor(x => x.Name, new { @class = "form-text text-muted" })

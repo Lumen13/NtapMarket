@@ -27,16 +27,12 @@
     <div class="row">
         <div class="col align-self-start">
             <a class="btn btn-outline-info"
-               asp-area=""
-               asp-controller="Home"
-               asp-action="EditProduct"
+               href="/Product/@Model.Id/Edit"
                role="button">
                 Изменить продукт
             </a>
             <a class="btn btn-outline-danger"
-               asp-area=""
-               asp-controller="Home"
-               asp-action="DeleteProduct"
+               href="/Product/@Model.Id/Delete"
                role="button">
                 Удалить продукт
             </a>

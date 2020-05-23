@@ -176,7 +176,16 @@ namespace NtapMarket.Data.EF.Repository
         {
             var product = _dBContext.Products.Find(productModel.Id);
             product.Name = productModel.Name;
-            _dBContext.Update(product);
+            product.Count = productModel.Count;
+            product.Price = productModel.Price;
+            product.MarketingInfo = productModel.MarketingInfo;
+            product.ProductCategoryId = productModel.ProductCategoryId;
+
+            //foreach (var item in productModel.ProductImage)
+            //{
+            //    item.ImageURL = 
+            //}
+
             _dBContext.SaveChanges();
         }
 

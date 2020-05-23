@@ -21,94 +21,23 @@ using NtapMarket.Web.Seller.Models;
 
 namespace NtapMarket.Web.Seller.Controllers
 {
-    [Route("Home")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductModelRepository _productModelRepository;
         private readonly int sellerId = 2;
-        IWebHostEnvironment _appEnvironment;                                //      Added
 
-        public string PublicInfo { get; set; }
-
-        public HomeController(ILogger<HomeController> logger
-            , IProductModelRepository productModelRepository
-            , IWebHostEnvironment appEnvironment)                           //      Received
+        public HomeController(ILogger<HomeController> logger, IProductModelRepository productModelRepository)
         {
             _productModelRepository = productModelRepository;
             _logger = logger;
-            _appEnvironment = appEnvironment;                               //      Initialized to make work DataContext
         }
 
-        [HttpGet, Route("Index")]
         public IActionResult Index()
         {
             List<ProductModel> productModels = _productModelRepository.GetProductModels(sellerId);
 
             return View(productModels);            
-        }
-
-        [HttpGet, Route("Product/{Id}")]
-        public IActionResult Product(int id)
-        {
-            ProductModel productModel = _productModelRepository.GetProductModel(id);
-
-            if (productModel == null)
-            {
-                return NotFound();                                                  // null-page check
-            }
-
-            return View(productModel);
-        }
-
-        [HttpGet]
-        public IActionResult AddProduct()
-        {
-            return View(new UserProductVM());
-        }
-
-        [HttpPost]
-        public IActionResult AddProduct(UserProductVM userProductVM)
-        {
-            if (ModelState.IsValid == false)
-            {
-                return View(userProductVM);
-            }
-
-            _productModelRepository.PushProductModel(userProductVM, sellerId);
-
-            return new LocalRedirectResult($"~/Home/Index/");
-        }
-
-        [HttpGet, Route("EditProduct/{Id}")]
-        public IActionResult EditProduct(int id)
-        {
-            ProductModel productModel = _productModelRepository.GetProductModel(id);
-
-            return View(productModel);
-        }
-
-        [HttpPost]
-        public IActionResult EditProduct(ProductModel productModel)
-        {
-            _productModelRepository.EditProductModel(productModel);
-
-            return new LocalRedirectResult($"~/Product/{productModel.Id}/");
-        }
-
-        public IActionResult DeleteProducts(int sellerId)
-        {
-            _productModelRepository.DeleteProducts(sellerId);
-
-            return new LocalRedirectResult($"~/Home/Index/");
-        }
-
-        [Route("DeleteProduct/{Id}")]
-        public IActionResult DeleteProduct(int id)
-        {
-            _productModelRepository.DeleteProduct(id);
-
-            return new LocalRedirectResult($"~/Home/Index/");
         }
 
         public IActionResult Privacy()
