@@ -21,6 +21,7 @@ using NtapMarket.Web.Seller.Models;
 
 namespace NtapMarket.Web.Seller.Controllers
 {
+    [Route("Home")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -39,6 +40,7 @@ namespace NtapMarket.Web.Seller.Controllers
             _appEnvironment = appEnvironment;                               //      Initialized to make work DataContext
         }
 
+        [HttpGet, Route("Index")]
         public IActionResult Index()
         {
             List<ProductModel> productModels = _productModelRepository.GetProductModels(sellerId);
@@ -46,7 +48,7 @@ namespace NtapMarket.Web.Seller.Controllers
             return View(productModels);            
         }
 
-        [Route("Product/{Id}")]
+        [HttpGet, Route("Product/{Id}")]
         public IActionResult Product(int id)
         {
             ProductModel productModel = _productModelRepository.GetProductModel(id);
@@ -55,14 +57,14 @@ namespace NtapMarket.Web.Seller.Controllers
             {
                 return NotFound();                                                  // null-page check
             }
-            
+
             return View(productModel);
         }
 
-        [HttpGet]        
+        [HttpGet]
         public IActionResult AddProduct()
         {
-            return View(new UserProductVM());            
+            return View(new UserProductVM());
         }
 
         [HttpPost]
@@ -78,20 +80,20 @@ namespace NtapMarket.Web.Seller.Controllers
             return new LocalRedirectResult($"~/Home/Index/");
         }
 
-        [HttpGet]
-        [Route("Edit/{Id}")]
+        [HttpGet, Route("EditProduct/{Id}")]
         public IActionResult EditProduct(int id)
         {
             ProductModel productModel = _productModelRepository.GetProductModel(id);
-            UserProductVM userProductVM = new UserProductVM()
-            {
-                Name = productModel.Name,
-                Count = productModel.Count,
-                Price = productModel.Price,
-                MarketingInfo = productModel.MarketingInfo
-            };
 
-            return View(userProductVM);
+            return View(productModel);
+        }
+
+        [HttpPost]
+        public IActionResult EditProduct(ProductModel productModel)
+        {
+            _productModelRepository.EditProductModel(productModel);
+
+            return new LocalRedirectResult($"~/Product/{productModel.Id}/");
         }
 
         public IActionResult DeleteProducts(int sellerId)
@@ -101,7 +103,7 @@ namespace NtapMarket.Web.Seller.Controllers
             return new LocalRedirectResult($"~/Home/Index/");
         }
 
-        [Route("{Id}")]
+        [Route("DeleteProduct/{Id}")]
         public IActionResult DeleteProduct(int id)
         {
             _productModelRepository.DeleteProduct(id);

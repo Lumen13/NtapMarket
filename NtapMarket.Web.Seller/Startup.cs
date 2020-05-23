@@ -34,11 +34,6 @@ namespace NtapMarket.Web.Seller
             {
                 return new ProductModelRepository(Configuration.GetConnectionString("NtapMarket"), webHostEnvironment.ContentRootPath);
             });
-
-            services.AddControllersWithViews(mvcOtions =>
-            {
-                mvcOtions.EnableEndpointRouting = false;
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,13 +54,15 @@ namespace NtapMarket.Web.Seller
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
-            {
-                //routes.MapRoute("Product", "Product/Id", new { controller = "Home", action = "Id" });
+            app.UseRouting();
 
-                routes.MapRoute(
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
