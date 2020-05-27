@@ -172,7 +172,7 @@ namespace NtapMarket.Data.EF.Repository
             return productModel;
         }
 
-        public void EditProductModel(ProductModel productModel, List<IFormFile> uploadedImages, int sellerId)
+        public void EditProductModel(ProductModel productModel, int sellerId)
         {
             var product = _dBContext.Products.Find(productModel.Id);
             product.Name = productModel.Name;
@@ -182,7 +182,7 @@ namespace NtapMarket.Data.EF.Repository
             product.ProductCategoryId = productModel.ProductCategoryId;
 
             int i = 0;
-            foreach (var editImage in uploadedImages)
+            foreach (var editImage in productModel.ProductImage)
             {
                 var imagePath = $"SellerImages\\sellerId_{sellerId}\\productId_{product.Id}\\";
 
@@ -191,7 +191,7 @@ namespace NtapMarket.Data.EF.Repository
                 using var filestream = new FileStream(Path.Combine(fullPath, $"file{i++}.png"),
                         FileMode.Create,
                         FileAccess.Write);
-                editImage.CopyTo(filestream);
+                editImage.ImageFile.CopyTo(filestream);
             }
 
             _dBContext.SaveChanges();

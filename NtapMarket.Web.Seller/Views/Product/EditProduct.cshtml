@@ -22,26 +22,20 @@
         @Html.TextAreaFor(x => x.MarketingInfo, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.MarketingInfo, "", new { @class = "form-text text-muted" })
     </div>
+
+    @foreach (var image in Model.ProductImage)
+    {
+        <div style="width: 400px; height: 400px;">
+            <input id="@Model.Id" type="button" value="X" style="position:absolute" onclick="DeleteImage(event)" >
+            <img style="width: 400px; height: 400px;" src="/@image.ImageURL" />
+        </div>
+    }
     <div>
         <h4>Multiple Model Files Upload (JS)</h4>
-        <input type="file" multiple onchange="EditProduct(event)" />
+        <input  type="file" multiple onchange="EditProduct(event)" />
     </div>
+
     <hr />
-
-    @section scripts {
-        <script>
-            var EditProduct = function (e) {
-                var uploadedImages = e.target.uploadedImages;
-                var formData = new FormData();
-
-                for (var i = 0; i < uploadedImages.length; i++) {
-                    formData.append("uploadedImages", uploadedImages[i])
-                }
-
-                axios.post("Product/EditProduct", formData);
-            }
-        </script>
-    }
 
     <div class="container">
         <div class="row">
@@ -51,8 +45,8 @@
                    role="button">
                     Отмена
                 </a>
-                <input type="submit" value="Сохранить" class="btn btn-success"/>
+                <input type="submit" value="Сохранить" class="btn btn-success" />
             </div>
         </div>
-    </div>    
+    </div>
 }

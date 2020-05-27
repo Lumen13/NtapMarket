@@ -63,9 +63,9 @@ namespace NtapMarket.Web.Seller.Controllers
         }
 
         [HttpPost, Route("{Id:int}/Edit")]
-        public IActionResult EditProduct(ProductModel productModel, List<IFormFile> uploadedImages)
+        public IActionResult EditProduct(ProductModel productModel)
         {
-            _productModelRepository.EditProductModel(productModel, uploadedImages, _sellerId);
+            _productModelRepository.EditProductModel(productModel, _sellerId);
 
             return new LocalRedirectResult($"~/Product/{productModel.Id}/");
         }
