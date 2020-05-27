@@ -22,11 +22,26 @@
         @Html.TextAreaFor(x => x.MarketingInfo, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.MarketingInfo, "", new { @class = "form-text text-muted" })
     </div>
-    @*<div class="form-group">
-        @Html.LabelFor(x => x.UploadedImages, new { @class = "form-text text-muted" })
-        @Html.TextBoxFor(x => x.UploadedImages, new { @class = "btn btn-light", type = "file", multiple = "multiple", accept = "image/*,image/jpeg" })
-        @Html.ValidationMessageFor(x => x.UploadedImages, "", new { @class = "form-text text-muted" })
-    </div>*@
+    <div>
+        <h4>Multiple Model Files Upload (JS)</h4>
+        <input type="file" multiple onchange="EditProduct(event)" />
+    </div>
+    <hr />
+
+    @section scripts {
+        <script>
+            var EditProduct = function (e) {
+                var uploadedImages = e.target.uploadedImages;
+                var formData = new FormData();
+
+                for (var i = 0; i < uploadedImages.length; i++) {
+                    formData.append("uploadedImages", uploadedImages[i])
+                }
+
+                axios.post("Product/EditProduct", formData);
+            }
+        </script>
+    }
 
     <div class="container">
         <div class="row">

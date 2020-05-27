@@ -15,7 +15,7 @@ namespace NtapMarket.Data.IRepository
 
         ProductModel PushProductModel(IAddedProductModel addedProductModel, int sellerId);
 
-        void EditProductModel(ProductModel productModel);
+        void EditProductModel(ProductModel productModel, List<IFormFile> editImages, int _sellerId);
 
         void DeleteProducts(int sellerId);
 

@@ -11,5 +11,6 @@ namespace NtapMarket.Data.DBModel
         public int ProductId { get; set; }
         public string ImageURL { get; set; }
         public IFormFile ImageFile { get; set; }
+        //public List<IFormFile> UploadedImages { get; set; }
     }
 }

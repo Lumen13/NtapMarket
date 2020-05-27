@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NtapMarket.Data.DBModel;
 using NtapMarket.Data.IRepository;
 using NtapMarket.Data.ObjectModel;
 using NtapMarket.Web.Seller.Models;
@@ -61,9 +63,9 @@ namespace NtapMarket.Web.Seller.Controllers
         }
 
         [HttpPost, Route("{Id:int}/Edit")]
-        public IActionResult EditProduct(ProductModel productModel)
+        public IActionResult EditProduct(ProductModel productModel, List<IFormFile> uploadedImages)
         {
-            _productModelRepository.EditProductModel(productModel);
+            _productModelRepository.EditProductModel(productModel, uploadedImages, _sellerId);
 
             return new LocalRedirectResult($"~/Product/{productModel.Id}/");
         }
