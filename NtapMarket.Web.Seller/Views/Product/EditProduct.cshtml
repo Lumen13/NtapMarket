@@ -23,30 +23,38 @@
         @Html.ValidationMessageFor(x => x.MarketingInfo, "", new { @class = "form-text text-muted" })
     </div>
 
-    @foreach (var image in Model.ProductImage)
+    @for (int i = 0; i < Model.ProductImage.Count; i++)
     {
-        <div style="width: 400px; height: 400px;">
-            <input id="@Model.Id" type="button" value="X" style="position:absolute" onclick="DeleteImage(event)" >
-            <img style="width: 400px; height: 400px;" src="/@image.ImageURL" />
+        <div class="@i" style="width: 400px; height: 400px;">
+            <input id="@Model.Id" type="button" value="X" style="position:absolute" onclick="DeleteImage(@i)">
+            <img id="images" style="width: 400px; height: 400px;" src="/@Model.ProductImage[i].ImageURL" />
         </div>
     }
-    <div>
-        <h4>Multiple Model Files Upload (JS)</h4>
-        <input  type="file" multiple onchange="EditProduct(event)" />
-    </div>
 
-    <hr />
-
-    <div class="container">
-        <div class="row">
-            <div class="col align-self-start">
-                <a class="btn btn-outline-info"
-                   href="/Product/@Model.Id/"
-                   role="button">
-                    Отмена
-                </a>
-                <input type="submit" value="Сохранить" class="btn btn-success" />
-            </div>
-        </div>
+    <div >
+        <img id="myImage" style="width: 400px; height: 400px;" />
+        <br><br>
+        <input class="btn btn-outline-info" type='file' onchange="readURL(this);" />
     </div>
 }
+
+
+@*<div>
+        <h4>Multiple Model Files Upload (JS)</h4>
+        <input type="file" multiple onchange="EditProduct(event)" />
+    </div>*@
+
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col align-self-start">
+            <a class="btn btn-outline-info"
+               href="/Product/@Model.Id/"
+               role="button">
+                Отмена
+            </a>
+            <input type="submit" value="Сохранить" class="btn btn-success" />
+        </div>
+    </div>
+</div>

@@ -1,19 +1,35 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
-var EditProduct = function (e) {
-    var uploadedImages = e.target.uploadedImages;
+﻿var EditProduct = function (e) {
+    var files = e.target.files;
     var formData = new FormData();
 
-    for (var i = 0; i < uploadedImages.length; i++) {
-        formData.append("uploadedImages", uploadedImages[i])
-    }
+    for (var i = 0; i < files.length; i++) {
 
-    axios.post("Product/EditProduct", formData);
+        //var keyName = `productModel.productImage${i}.imageFile`;
+        //formData.append(keyName, files[i]);
+        
+        //elem.insertAdjacentHTML('beforebegin', ``)
+    }    
+
+    //axios.post("Edit", formData);
 }
 
-var DeleteImage = function (e) {
-    alert("qw!!!!!!!eqwe");
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#myImage')
+                .attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+var DeleteImage = function (i) {
+    for (var j = 0; j < document.body.children[1].firstElementChild.firstElementChild.children.length; j++) {
+        if (document.body.children[1].firstElementChild.firstElementChild.children[j].className == i) {
+            document.body.children[1].firstElementChild.firstElementChild.children[j].remove()
+        } 
+    }    
 }
