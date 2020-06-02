@@ -23,26 +23,19 @@
         @Html.ValidationMessageFor(x => x.MarketingInfo, "", new { @class = "form-text text-muted" })
     </div>
 
-    @for (int i = 0; i < Model.ProductImage.Count; i++)
-    {
-        <div class="@i" style="width: 400px; height: 400px;">
-            <input id="@Model.Id" type="button" value="X" style="position:absolute" onclick="DeleteImage(@i)">
-            <img id="images" style="width: 400px; height: 400px;" src="/@Model.ProductImage[i].ImageURL" />
-        </div>
-    }
-
-    <div >
-        <img id="myImage" style="width: 400px; height: 400px;" />
-        <br><br>
-        <input class="btn btn-outline-info" type='file' onchange="readURL(this);" />
-    </div>
+    <div class="userImages col-4">
+        @for (int i = 0; i < Model.ProductImage.Count; i++)
+        {
+            <div class="dbImg-@i" style="width: 400px; height: 400px;">
+                <input id="@Model.Id" class="btn btn-danger" type="button" value="X" style="position:absolute; opacity:0.7" onclick="DeleteImage(@i)">
+                <img id="images" style="width: 400px; height: 400px;" src="/@Model.ProductImage[i].ImageURL" />
+            </div>
+        }        
+        <hr>
+            <input class="col btn btn-light" type="file" onchange="imageUpload(this)" />        
+        <br><hr>
+    </div>   
 }
-
-
-@*<div>
-        <h4>Multiple Model Files Upload (JS)</h4>
-        <input type="file" multiple onchange="EditProduct(event)" />
-    </div>*@
 
 <hr />
 
