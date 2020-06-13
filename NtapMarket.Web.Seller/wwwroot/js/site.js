@@ -18,6 +18,7 @@
             }
 
             const img = document.createElement('img')
+            img.id = `userImg${inputClickCounter}`
             img.style.height = '400px'
             img.style.width = '400px'
             img.src = reader.result
@@ -45,6 +46,29 @@ var DeleteImage = function (i) {
             document.body.children[1].firstElementChild.firstElementChild.children[4].children[j].remove()
         }
     }
+}
+
+var UploadFilesToModel = function (e) {
+
+    var formData = new FormData();
+
+    for (var i = 0; i < 3; i++) {
+        if (document.body.children[1].firstElementChild.firstElementChild.children[4].children[i].children[1].id === `images`) {
+            var keyName = `productImages[${i}].productImage`;
+            const ImageURL = document.body.children[1].firstElementChild.firstElementChild.children[4].children[i].children[1].src;
+            formData.append(keyName, ImageURL[i]);
+        }
+    }
+
+    for (var i = 0; i < 2; i++) {
+        if (document.body.children[1].firstElementChild.firstElementChild.children[4].children[i].children[1].id === `userImg${i}`) {
+            var keyName = `productImages[${i}].productImage`;
+            const ImageURL = document.body.children[1].firstElementChild.firstElementChild.children[4].children[i].children[1].src;
+            formData.append(keyName, ImageURL[i]);
+        }
+    }
+
+    axios.post("Edit", formData);    
 }
 
 //var EditProduct = function (e) {

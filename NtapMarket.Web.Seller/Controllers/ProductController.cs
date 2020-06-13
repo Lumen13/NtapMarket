@@ -63,7 +63,7 @@ namespace NtapMarket.Web.Seller.Controllers
         }
 
         [HttpPost, Route("{Id:int}/Edit")]
-        public IActionResult EditProduct(ProductModel productModel)
+        public IActionResult EditProduct(ProductModel productModel, ProductImage productImage)
         {            
             _productModelRepository.EditProductModel(productModel, _sellerId);
 
